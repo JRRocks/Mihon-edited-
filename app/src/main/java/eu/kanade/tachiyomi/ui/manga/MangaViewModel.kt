@@ -75,6 +75,10 @@ import logcat.LogPriority
 import mihon.core.metro.AppCoroutineScope
 import mihon.domain.chapter.interactor.FilterChaptersForDownload
 import mihon.domain.source.interactor.UpdateMangaFromRemote
+import mihon.feature.colorization.ColorizationModelManager
+import mihon.feature.colorization.ColorizationPreferences
+import mihon.feature.colorization.ColorizationStore
+import mihon.feature.colorization.ColorizationWorker
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.core.common.preference.CheckboxState
 import tachiyomi.core.common.preference.TriState
@@ -139,6 +143,9 @@ class MangaViewModel(
     private val sourceManager: SourceManager,
     private val refreshTracks: RefreshTracks,
     private val coverCache: CoverCache,
+    private val colorizationStore: ColorizationStore,
+    private val colorizationPreferences: ColorizationPreferences,
+    private val colorizationModelManager: ColorizationModelManager,
 ) : ViewModel() {
 
     private val subscriberGate = SubscriberGate()
@@ -219,11 +226,14 @@ class MangaViewModel(
             .distinctUntilChanged(),
         downloadCache.changes.pausedWhileUnsubscribed(),
         downloadManager.queueState.pausedWhileUnsubscribed(),
-    ) { (manga, chapters), _, _ ->
+        colorizationStore.changes.pausedWhileUnsubscribed(),
+    ) { (manga, chapters), _, _, _ ->
+        val source = sourceManager.getOrStub(manga.source)
+        val colorizedChapterIds = colorizationStore.getColorizedChapterIds(chapters, manga, source)
         MangaAndChapters(
             manga = manga,
-            source = sourceManager.getOrStub(manga.source),
-            chapters = chapters.toChapterListItems(manga),
+            source = source,
+            chapters = chapters.toChapterListItems(manga, colorizedChapterIds),
         )
     }
 
@@ -584,7 +594,7 @@ class MangaViewModel(
         return downloadProgress[chapterId] ?: 0
     }
 
-    private fun List<Chapter>.toChapterListItems(manga: Manga): List<ChapterList.Item> {
+    private fun List<Chapter>.toChapterListItems(manga: Manga, colorizedChapterIds: Set<Long>): List<ChapterList.Item> {
         val isLocal = manga.isLocal()
         val queuedDownloads = if (isLocal) emptyMap() else downloadManager.getQueuedDownloadsByChapterId()
         val downloadedChapterIds = if (isLocal) emptySet() else downloadManager.getDownloadedChapterIds(this, manga)
@@ -600,6 +610,7 @@ class MangaViewModel(
             ChapterList.Item(
                 chapter = chapter,
                 downloadState = downloadState,
+                colorized = chapter.id in colorizedChapterIds,
             )
         }
     }
@@ -1051,6 +1062,13 @@ class MangaViewModel(
             val initialSelection: List<CheckboxState<Category>>,
         ) : Dialog
         data class DeleteChapters(val chapters: List<Chapter>) : Dialog
+        data class ColorizeChapters(
+            val chapters: List<Chapter>,
+            val colorizedCount: Int,
+            val engine: ColorizationPreferences.Engine,
+            val needsModelDownload: Boolean,
+            val isServerMissing: Boolean,
+        ) : Dialog
         data class DuplicateManga(val manga: Manga, val duplicates: List<MangaWithChapterCount>) : Dialog
         data class Migrate(val target: Manga, val current: Manga) : Dialog
         data class SetFetchInterval(val manga: Manga) : Dialog
@@ -1066,6 +1084,35 @@ class MangaViewModel(
 
     fun showDeleteChapterDialog(chapters: List<Chapter>) {
         dialog.value = Dialog.DeleteChapters(chapters)
+    }
+
+    fun showColorizeChaptersDialog(items: List<ChapterList.Item>) {
+        val downloaded = items.filter { it.isDownloaded }
+        if (downloaded.isEmpty()) return
+        val engine = colorizationPreferences.engine.get()
+        dialog.value = Dialog.ColorizeChapters(
+            chapters = downloaded.map { it.chapter },
+            colorizedCount = downloaded.count { it.colorized },
+            engine = engine,
+            needsModelDownload = engine == ColorizationPreferences.Engine.ON_DEVICE &&
+                !colorizationModelManager.isDownloaded.value,
+            isServerMissing = engine == ColorizationPreferences.Engine.SERVER &&
+                colorizationPreferences.serverUrl.get().isBlank(),
+        )
+    }
+
+    fun colorizeChapters(chapters: List<Chapter>) {
+        toggleAllSelection(false)
+        ColorizationWorker.start(context, chapters)
+        context.toast(MR.strings.colorization_started)
+    }
+
+    fun removeColorization(chapters: List<Chapter>) {
+        val state = successState ?: return
+        toggleAllSelection(false)
+        appScope.launch {
+            colorizationStore.deleteChapters(chapters, state.manga, state.source)
+        }
     }
 
     fun showSettingsDialog() {
@@ -1206,6 +1253,7 @@ sealed class ChapterList {
         val chapter: Chapter,
         val downloadState: Download.State,
         val selected: Boolean = false,
+        val colorized: Boolean = false,
     ) : ChapterList() {
         val id = chapter.id
         val isDownloaded = downloadState == Download.State.DOWNLOADED

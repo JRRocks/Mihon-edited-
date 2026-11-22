@@ -75,6 +75,10 @@ class StorageManager(
         return getChildDirectory(LOCAL_SOURCE_PATH)
     }
 
+    fun getColorizedDirectory(): UniFile? {
+        return getChildDirectory(COLORIZED_PATH)
+    }
+
     private fun getChildDirectory(name: String): UniFile? {
         val parent = baseDir ?: return null
         childDirectories[name]
@@ -87,3 +91,4 @@ class StorageManager(
 private const val AUTOMATIC_BACKUPS_PATH = "autobackup"
 private const val DOWNLOADS_PATH = "downloads"
 private const val LOCAL_SOURCE_PATH = "local"
+private const val COLORIZED_PATH = "colorized"

@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import logcat.LogPriority
+import mihon.feature.colorization.ColorizationStore
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.core.common.storage.extension
 import tachiyomi.core.common.util.system.ImageUtil
@@ -51,6 +52,7 @@ class DownloadManager(
     private val downloadPreferences: DownloadPreferences,
     private val downloader: Downloader,
     private val pendingDeleter: DownloadPendingDeleter,
+    private val colorizationStore: ColorizationStore,
 ) {
 
     val queueState
@@ -278,6 +280,7 @@ class DownloadManager(
             val (mangaDir, chapterDirs) = provider.findChapterDirs(filteredChapters, manga, source)
             chapterDirs.forEach { it.delete() }
             cache.removeChapters(filteredChapters, manga)
+            colorizationStore.deleteChapters(filteredChapters, manga, source)
 
             // Delete manga directory if empty
             if (mangaDir?.listFiles()?.isEmpty() == true) {
@@ -300,6 +303,7 @@ class DownloadManager(
             }
             provider.findMangaDir(manga.title, source)?.delete()
             cache.removeManga(manga)
+            colorizationStore.deleteManga(manga, source)
 
             // Delete source directory if empty
             val sourceDir = provider.findSourceDir(source)

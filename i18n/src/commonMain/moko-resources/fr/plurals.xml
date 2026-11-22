@@ -115,4 +115,14 @@
         <item quantity="many">%1$d mises à jour échouées</item>
         <item quantity="other">%1$d mises à jour échouées</item>
     </plurals>
-</resources>
+
+    <plurals name="colorization_dialog_chapters">
+        <item quantity="one">Coloriser %1$d chapitre téléchargé ? L\'original reste intact.</item>
+        <item quantity="many">Coloriser %1$d chapitres téléchargés ? Les originaux restent intacts.</item>
+        <item quantity="other">Coloriser %1$d chapitres téléchargés ? Les originaux restent intacts.</item>
+    </plurals>
+    <plurals name="colorization_dialog_already_colorized">
+        <item quantity="one">%1$d chapitre est déjà colorisé et sera refait.</item>
+        <item quantity="many">%1$d chapitres sont déjà colorisés et seront refaits.</item>
+        <item quantity="other">%1$d chapitres sont déjà colorisés et seront refaits.</item>
+    </plurals></resources>

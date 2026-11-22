@@ -39,6 +39,8 @@ android {
 
         versionCode = 38
         versionName = "0.21.2"
+        // Fork release, bumped for every APK of Mihon (edited)
+        versionNameSuffix = "-edited.3"
 
         buildConfigField("boolean", "TELEMETRY_INCLUDED", "${Config.includeTelemetry}")
         buildConfigField("boolean", "UPDATER_ENABLED", "${Config.enableUpdater}")
@@ -139,6 +141,8 @@ android {
                 "libarchive-jni",
                 "libconscrypt_jni",
                 "libimagedecoder",
+                "libonnxruntime",
+                "libonnxruntime4j_jni",
                 "libquickjs",
                 "libsqlite3x",
             )
@@ -257,6 +261,9 @@ dependencies {
 
     // Job scheduling
     implementation(libs.androidx.work)
+
+    // AI colorization
+    implementation(libs.onnxruntime.android)
 
     // RxJava
     implementation(libs.rxJava)

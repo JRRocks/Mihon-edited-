@@ -91,3 +91,6 @@
     public <init>();
     public void destroy();
 }
+
+# ONNX Runtime creates its Java objects from native code
+-keep class ai.onnxruntime.** { *; }

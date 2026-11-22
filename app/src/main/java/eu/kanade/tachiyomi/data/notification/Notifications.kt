@@ -60,6 +60,13 @@ object Notifications {
     const val ID_RESTORE_COMPLETE = -504
 
     /**
+     * Notification channel and ids used by the AI colorization.
+     */
+    const val CHANNEL_COLORIZATION = "colorization_channel"
+    const val ID_COLORIZATION_PROGRESS = -601
+    const val ID_COLORIZATION_COMPLETE = -602
+
+    /**
      * Notification channel used for Incognito Mode
      */
     const val CHANNEL_INCOGNITO_MODE = "incognito_mode_channel"
@@ -153,6 +160,10 @@ object Notifications {
                     setGroup(GROUP_BACKUP_RESTORE)
                     setShowBadge(false)
                     setSound(null, null)
+                },
+                buildNotificationChannel(CHANNEL_COLORIZATION, IMPORTANCE_LOW) {
+                    setName(context.stringResource(MR.strings.colorization_notification_title))
+                    setShowBadge(false)
                 },
                 buildNotificationChannel(CHANNEL_INCOGNITO_MODE, IMPORTANCE_LOW) {
                     setName(context.stringResource(MR.strings.pref_incognito_mode))

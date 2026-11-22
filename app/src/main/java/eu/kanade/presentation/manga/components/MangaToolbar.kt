@@ -20,6 +20,7 @@ import mihon.icons.materialsymbols.MaterialSymbols
 import mihon.icons.materialsymbols.rounded.Download
 import mihon.icons.materialsymbols.rounded.FilterList
 import mihon.icons.materialsymbols.rounded.FlipToBack
+import mihon.icons.materialsymbols.rounded.Palette
 import mihon.icons.materialsymbols.rounded.SelectAll
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
@@ -43,6 +44,7 @@ fun MangaToolbar(
     onCancelActionMode: () -> Unit,
     onSelectAll: () -> Unit,
     onInvertSelection: () -> Unit,
+    onColorizeSelection: (() -> Unit)?,
 
     titleAlphaProvider: () -> Float,
     backgroundAlphaProvider: () -> Float,
@@ -77,6 +79,15 @@ fun MangaToolbar(
             AppBarActions(
                 actions = buildList {
                     if (isActionMode) {
+                        if (onColorizeSelection != null) {
+                            add(
+                                AppBar.Action(
+                                    title = stringResource(MR.strings.action_colorize),
+                                    icon = MaterialSymbols.Rounded.Palette,
+                                    onClick = onColorizeSelection,
+                                ),
+                            )
+                        }
                         add(
                             AppBar.Action(
                                 title = stringResource(MR.strings.action_select_all),

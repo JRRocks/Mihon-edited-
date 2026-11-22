@@ -56,6 +56,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import logcat.LogPriority
+import mihon.feature.colorization.ColorizeChaptersDialog
 import mihon.feature.migration.config.MigrationConfigScreen
 import mihon.feature.migration.dialog.MigrateMangaDialog
 import tachiyomi.core.common.util.system.logcat
@@ -165,6 +166,7 @@ class MangaScreen(
             onMultiMarkAsReadClicked = viewModel::markChaptersRead,
             onMarkPreviousAsReadClicked = viewModel::markPreviousChapterRead,
             onMultiDeleteClicked = viewModel::showDeleteChapterDialog,
+            onMultiColorizeClicked = viewModel::showColorizeChaptersDialog,
             onChapterSwipe = viewModel::chapterSwipe,
             onChapterSelected = viewModel::toggleSelection,
             onAllChapterSelected = viewModel::toggleAllSelection,
@@ -202,6 +204,20 @@ class MangaScreen(
                         viewModel.toggleAllSelection(false)
                         viewModel.deleteChapters(dialog.chapters)
                     },
+                )
+            }
+
+            is MangaViewModel.Dialog.ColorizeChapters -> {
+                ColorizeChaptersDialog(
+                    chapterCount = dialog.chapters.size,
+                    colorizedCount = dialog.colorizedCount,
+                    engine = dialog.engine,
+                    needsModelDownload = dialog.needsModelDownload,
+                    isServerMissing = dialog.isServerMissing,
+                    onDismissRequest = onDismissRequest,
+                    onColorize = { viewModel.colorizeChapters(dialog.chapters) },
+                    onRemoveColorization = { viewModel.removeColorization(dialog.chapters) },
+                    onOpenSettings = { navigator.push(SettingsScreen(SettingsScreen.Destination.Colorization)) },
                 )
             }
 

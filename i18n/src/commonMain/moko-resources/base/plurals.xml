@@ -114,4 +114,12 @@
         <item quantity="one">%1$d update failed</item>
         <item quantity="other">%1$d updates failed</item>
     </plurals>
-</resources>
+
+    <plurals name="colorization_dialog_chapters">
+        <item quantity="one">Colorize %1$d downloaded chapter? The original stays untouched.</item>
+        <item quantity="other">Colorize %1$d downloaded chapters? The originals stay untouched.</item>
+    </plurals>
+    <plurals name="colorization_dialog_already_colorized">
+        <item quantity="one">%1$d chapter is already colorized and will be redone.</item>
+        <item quantity="other">%1$d chapters are already colorized and will be redone.</item>
+    </plurals></resources>

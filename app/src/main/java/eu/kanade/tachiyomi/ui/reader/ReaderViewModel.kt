@@ -78,6 +78,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import logcat.LogPriority
 import mihon.core.metro.AppCoroutineScope
+import mihon.feature.colorization.ColorizationStore
 import tachiyomi.core.common.preference.toggle
 import tachiyomi.core.common.util.system.logcat
 import tachiyomi.domain.chapter.interactor.GetChaptersByMangaId
@@ -129,6 +130,7 @@ class ReaderViewModel(
     private val coverCache: CoverCache,
     private val chapterCache: ChapterCache,
     private val downloadCache: DownloadCache,
+    private val colorizationStore: ColorizationStore,
 ) : ViewModel() {
 
     @AssistedFactory
@@ -362,6 +364,7 @@ class ReaderViewModel(
                     ::canLoadAhead,
                     manga,
                     source,
+                    colorizationStore,
                 )
 
                 chapterList = loadChapterList()

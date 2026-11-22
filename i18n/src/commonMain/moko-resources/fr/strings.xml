@@ -893,4 +893,41 @@
     <string name="donationCampaign.paragraph3">Quoi qu\'il en soit, Mihon continuera d\'être maintenu par les contributeurs et moi-même, et restera open-source.</string>
     <string name="donationCampaign.contactPlatform">Discord</string>
     <string name="donationCampaign.dismiss">Faire disparaitre</string>
-</resources>
+
+    <!-- AI colorization -->
+    <string name="action_colorize">Coloriser (IA)</string>
+    <string name="action_remove_colorization">Supprimer la colorisation</string>
+    <string name="colorized">Colorisé</string>
+    <string name="colorization_notification_title">Colorisation IA</string>
+    <string name="colorization_downloading_model">Téléchargement du modèle IA…</string>
+    <string name="colorization_server_url_missing">Indiquez l\'adresse du serveur de colorisation dans Paramètres › Colorisation IA</string>
+    <string name="colorization_storage_error">Impossible d\'enregistrer le chapitre colorisé</string>
+    <string name="colorization_chapter_progress">Chapitre %1$d/%2$d · %3$s</string>
+    <string name="colorization_complete">Chapitres colorisés : %1$d</string>
+    <string name="colorization_error">Échec de la colorisation</string>
+    <string name="colorization_started">Colorisation lancée, suivez-la dans la notification</string>
+    <string name="colorization_dialog_title">Colorisation IA</string>
+    <string name="colorization_dialog_engine">Moteur : %1$s</string>
+    <string name="colorization_engine_on_device">Sur cet appareil</string>
+    <string name="colorization_engine_server">Serveur (PC ou en ligne)</string>
+    <string name="colorization_dialog_model_download">Le modèle IA (31 Mo) sera d\'abord téléchargé.</string>
+    <string name="pref_category_colorization">Colorisation IA</string>
+    <string name="pref_colorization_summary">Coloriser les chapitres téléchargés, moteur, serveur</string>
+    <string name="pref_colorization_info">Sélectionnez des chapitres téléchargés par un appui long, puis touchez la palette en haut de l\'écran. Les copies colorisées sont rangées à part : les originaux ne sont jamais modifiés.</string>
+    <string name="pref_colorization_show_colorized">Lire les versions colorisées</string>
+    <string name="pref_colorization_show_colorized_summary">Ouvrir la copie colorisée d\'un chapitre dans le lecteur quand elle existe</string>
+    <string name="pref_colorization_engine">Moteur de colorisation</string>
+    <string name="pref_colorization_resolution">Qualité</string>
+    <string name="colorization_resolution_fast">Rapide (%1$d px)</string>
+    <string name="colorization_resolution_balanced">Équilibrée (%1$d px)</string>
+    <string name="colorization_resolution_detailed">Détaillée, plus lente (%1$d px)</string>
+    <string name="pref_colorization_model">Modèle IA (manga-colorization-v2)</string>
+    <string name="colorization_model_downloaded">Téléchargé (31 Mo), touchez pour supprimer</string>
+    <string name="colorization_model_not_downloaded">Non téléchargé (31 Mo), touchez pour télécharger</string>
+    <string name="colorization_model_downloading">Téléchargement… %1$d %%</string>
+    <string name="pref_colorization_server_url">Adresse du serveur</string>
+    <string name="pref_colorization_server_url_empty">Non définie, ex. http://192.168.1.10:8765</string>
+    <string name="pref_colorization_server_test">Tester la connexion</string>
+    <string name="colorization_server_ok">Serveur de colorisation joignable</string>
+    <string name="colorization_server_error">Serveur injoignable : %1$s</string>
+    <string name="pref_colorization_server_info">Lancez tools/colorization-server/start-server.bat sur un PC connecté au même réseau, puis saisissez une des adresses affichées. Il colorise avec la carte graphique du PC : couleurs de base, puis aplats par zone, peau naturelle, bulles blanches et une palette par série (environ 500 Mo téléchargés au premier lancement). Lancé avec --director, une IA locale choisit la palette de chaque série d'après son titre. Le même serveur peut être hébergé en ligne.</string></resources>

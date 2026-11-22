@@ -45,6 +45,9 @@ import kotlinx.serialization.protobuf.ProtoBuf
 import mihon.core.metro.IsDebugBuild
 import mihon.domain.extension.interactor.GetExtensionStoreCountAsFlow
 import mihon.domain.extension.repository.ExtensionStoreRepository
+import mihon.feature.colorization.ColorizationModelManager
+import mihon.feature.colorization.ColorizationPreferences
+import mihon.feature.colorization.ColorizationWorker
 import nl.adaptivity.xmlutil.serialization.XML
 import tachiyomi.domain.backup.service.BackupPreferences
 import tachiyomi.domain.category.interactor.GetCategories
@@ -73,6 +76,7 @@ interface AppGraph : ViewModelGraph {
     fun inject(backupCreateWorker: BackupCreateWorker)
     fun inject(delayedTrackingUpdateWorker: DelayedTrackingUpdateWorker)
     fun inject(downloadWorker: DownloadWorker)
+    fun inject(colorizationWorker: ColorizationWorker)
     fun inject(notificationReceiver: NotificationReceiver)
     fun inject(notificationReceiver: SecureActivityDelegateImpl)
     fun inject(extensionInstallActivity: ExtensionInstallActivity)
@@ -93,10 +97,12 @@ interface AppGraph : ViewModelGraph {
     val privacyPreferences: PrivacyPreferences
     val securityPreferences: SecurityPreferences
     val downloadPreferences: DownloadPreferences
+    val colorizationPreferences: ColorizationPreferences
 
     val crashLogUtil: CrashLogUtil
 
     val downloadManager: DownloadManager
+    val colorizationModelManager: ColorizationModelManager
 
     val updateChecker: AppUpdateChecker
 

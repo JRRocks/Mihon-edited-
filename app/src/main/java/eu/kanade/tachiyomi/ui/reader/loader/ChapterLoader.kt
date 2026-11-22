@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mihon.core.archive.archiveReader
 import mihon.core.archive.epubReader
+import mihon.feature.colorization.ColorizationStore
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.core.common.util.system.logcat
 import tachiyomi.domain.manga.model.Manga
@@ -33,6 +34,7 @@ class ChapterLoader(
     private val canLoadAhead: () -> Boolean,
     private val manga: Manga,
     private val source: Source,
+    private val colorizationStore: ColorizationStore,
 ) {
 
     /**
@@ -84,6 +86,9 @@ class ChapterLoader(
      */
     private suspend fun getPageLoader(chapter: ReaderChapter): PageLoader {
         val dbChapter = chapter.chapter
+        colorizationStore.findColorizedChapterToRead(dbChapter, manga, source)?.let {
+            return ArchivePageLoader(it.archiveReader(context))
+        }
         val isDownloaded = downloadManager.isChapterDownloadedOnDisk(
             dbChapter.name,
             dbChapter.scanlator,

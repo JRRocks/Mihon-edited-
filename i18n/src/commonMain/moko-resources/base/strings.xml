@@ -1124,4 +1124,41 @@
     <string name="donationCampaign.paragraph3">Regardless, Mihon will continue to be maintained by me and the volunteers, and it will stay open source.</string>
     <string name="donationCampaign.contactPlatform">Discord</string>
     <string name="donationCampaign.dismiss">Dismiss</string>
-</resources>
+
+    <!-- AI colorization -->
+    <string name="action_colorize">Colorize (AI)</string>
+    <string name="action_remove_colorization">Remove colorization</string>
+    <string name="colorized">Colorized</string>
+    <string name="colorization_notification_title">AI colorization</string>
+    <string name="colorization_downloading_model">Downloading the AI model…</string>
+    <string name="colorization_server_url_missing">Set the colorization server address in Settings › AI colorization</string>
+    <string name="colorization_storage_error">Couldn\'t save the colorized chapter</string>
+    <string name="colorization_chapter_progress">Chapter %1$d/%2$d · %3$s</string>
+    <string name="colorization_complete">Colorized chapters: %1$d</string>
+    <string name="colorization_error">Colorization failed</string>
+    <string name="colorization_started">Colorization started, see the notification</string>
+    <string name="colorization_dialog_title">AI colorization</string>
+    <string name="colorization_dialog_engine">Engine: %1$s</string>
+    <string name="colorization_engine_on_device">On this device</string>
+    <string name="colorization_engine_server">Server (PC or online)</string>
+    <string name="colorization_dialog_model_download">The AI model (31 MB) will be downloaded first.</string>
+    <string name="pref_category_colorization">AI colorization</string>
+    <string name="pref_colorization_summary">Colorize downloaded chapters, engine, server</string>
+    <string name="pref_colorization_info">Select downloaded chapters with a long press, then tap the palette at the top of the screen. Colorized copies are stored apart from the downloads: the originals are never modified.</string>
+    <string name="pref_colorization_show_colorized">Read colorized versions</string>
+    <string name="pref_colorization_show_colorized_summary">Open the colorized copy of a chapter in the reader when there is one</string>
+    <string name="pref_colorization_engine">Colorization engine</string>
+    <string name="pref_colorization_resolution">Quality</string>
+    <string name="colorization_resolution_fast">Fast (%1$d px)</string>
+    <string name="colorization_resolution_balanced">Balanced (%1$d px)</string>
+    <string name="colorization_resolution_detailed">Detailed, slower (%1$d px)</string>
+    <string name="pref_colorization_model">AI model (manga-colorization-v2)</string>
+    <string name="colorization_model_downloaded">Downloaded (31 MB), tap to delete</string>
+    <string name="colorization_model_not_downloaded">Not downloaded (31 MB), tap to download</string>
+    <string name="colorization_model_downloading">Downloading… %1$d%%</string>
+    <string name="pref_colorization_server_url">Server address</string>
+    <string name="pref_colorization_server_url_empty">Not set, e.g. http://192.168.1.10:8765</string>
+    <string name="pref_colorization_server_test">Test the connection</string>
+    <string name="colorization_server_ok">Colorization server reachable</string>
+    <string name="colorization_server_error">Server unreachable: %1$s</string>
+    <string name="pref_colorization_server_info">Run tools/colorization-server/start-server.bat on a PC connected to the same network, then enter one of the addresses it shows. It colorizes on the PC's graphics card: base colors, then flat colors per region, natural skin, white speech bubbles and one palette per series (about 500 MB downloaded on first start). Started with --director, a local AI picks each series' palette from its title. The same server can be hosted online.</string></resources>
