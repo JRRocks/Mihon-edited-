@@ -131,3 +131,14 @@ def test_skin_tones():
     assert measure.skin_word(measure.hex_to_oklab("#c98a5a")) == "tan"
     assert not measure.is_natural_skin(measure.hex_to_oklab("#5a8fd8"))
     assert measure.skin_word(measure.hex_to_oklab("#5a8fd8")) == "blue"
+
+
+def test_eye_color_is_the_iris_not_the_pupil():
+    image = np.full((60, 60, 3), 250, np.uint8)
+    mask = np.zeros((60, 60), bool)
+    mask[10:50, 10:50] = True
+    image[16:44, 20:40] = rgb("#2b8fa8")  # iris
+    image[22:38, 24:36] = rgb("#0d0d10")  # pupil and lashes, the larger tone
+    image[10:16, 10:50] = rgb("#0d0d10")
+    tones = measure.measure_part(image, mask, "eyes")
+    assert measure.color_word(tones["base"], "eyes") in ("aqua", "blue")

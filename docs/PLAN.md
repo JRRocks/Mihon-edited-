@@ -4,8 +4,9 @@ Chantier en cours : **colorisation fidèle** (personnages aux couleurs officiell
 des scènes, tenues selon l'arc). La logique est décrite dans
 [`specs/colorisation-fidele.md`](specs/colorisation-fidele.md), les décisions dans [`DECISIONS.md`](DECISIONS.md).
 
-État au 2026-11-22 : feu vert donné (D16). Série d'essai : One Piece (D17). La tâche 2 tourne en session cloud
-sur la branche `colorisation` ; les autres tâches de la partie 1 se font sur le PC.
+État au 2026-11-23 : feu vert donné (D16). Série d'essai : One Piece (D17). La tâche 2 est faite en session cloud,
+sur la branche `claude/magical-mendel-3nv2ua` partie de `colorisation` : sa page attend le jugement de l'utilisateur.
+Les autres tâches de la partie 1 se font sur le PC.
 
 ## Partie 1 : la preuve sur le PC, avec l'application actuelle
 
@@ -14,7 +15,7 @@ Chaque tâche se termine par une image ou une page que l'utilisateur ouvre et ju
 | N° | Tâche | Ce que l'utilisateur voit quand c'est réussi | État |
 |---|---|---|---|
 | 1 | Jeu d'essai : le serveur du PC garde les pages qu'il reçoit ; l'utilisateur lance depuis le téléphone le coloriage d'un chapitre de One Piece (D13, D17) | Le dossier d'essai contient les pages du chapitre, dans l'ordre, et le titre de la série | en cours (PC) |
-| 2 | Fiche de la série d'essai, construite par la recherche automatique | Une page « fiche couleurs » : les personnages principaux, leurs couleurs, d'où vient chaque couleur, et les points où le PC doute (D14) ; il dit si c'est juste | en cours (session cloud, D16) |
+| 2 | Fiche de la série d'essai, construite par la recherche automatique | Une page « fiche couleurs » : les personnages principaux, leurs couleurs, d'où vient chaque couleur, et les points où le PC doute (D14) ; il dit si c'est juste | à juger : [fiche One Piece](../tools/colorization-server/essais/one-piece/fiche.md) (outil `color_sheet.py`, D30 à D35) |
 | 3 | Reconnaissance des personnages sur le chapitre d'essai (téléchargement autorisé par D12) | Les pages du chapitre avec un nom sur chaque personnage ; le taux de bons noms est écrit. Sous 85 % sur les personnages principaux, on s'arrête et on choisit une autre voie | à faire |
 | 4 | Comparaison des moteurs sur dix pages, références données case par case : moteur installé contre moteur spécialisé (D12) | Une planche avant et après par moteur, avec le temps par page ; il choisit le moteur | à faire |
 | 5 | Verrou des couleurs et contrôle | Sur tout le chapitre, cheveux, peau et tenue de chaque personnage reconnu gardent la même couleur ; la liste des pages douteuses est affichée | à faire |

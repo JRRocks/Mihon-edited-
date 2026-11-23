@@ -1,0 +1,242 @@
+{
+  "id": "al-309",
+  "anilist_id": 309,
+  "names": {
+    "main": "Tony Tony Chopper",
+    "anilist": "Chopper Tony Tony",
+    "native": "トニートニー・チョッパー",
+    "aliases": [
+      "Tanuki",
+      "Chopperman",
+      "Cotton Candy Lover",
+      "Racoon Dog",
+      "Chobro",
+      "Chopa-emon  (チョッパえもん)",
+      "Chopperemon"
+    ]
+  },
+  "role": "main",
+  "status": "to_review",
+  "doubts": [
+    "Cheveux : la couleur ne repose que sur une image (image AniList).",
+    "Peau : la couleur ne repose que sur une image (image AniList)."
+  ],
+  "parts": {
+    "hair": {
+      "base": "#fa6180",
+      "shadow": "#ca4262",
+      "highlight": "#fefefe",
+      "word": "red",
+      "source": "ref-01",
+      "sources": [
+        "ref-01"
+      ],
+      "kind": "anime",
+      "images": 1,
+      "of": 1,
+      "confidence": 0.5,
+      "control": {
+        "verdict": "accord",
+        "danbooru": [
+          [
+            "black",
+            0.5
+          ],
+          [
+            "blonde",
+            0.36
+          ],
+          [
+            "orange",
+            0.35
+          ],
+          [
+            "green",
+            0.35
+          ]
+        ],
+        "wiki": []
+      },
+      "locked": true,
+      "measures": [
+        {
+          "ref": "ref-01",
+          "base": "#fa6180",
+          "word": "red",
+          "share": 0.42
+        },
+        {
+          "ref": "ref-01",
+          "base": "#ca4262",
+          "word": "red",
+          "share": 0.14
+        }
+      ]
+    },
+    "skin": {
+      "base": "#fdd792",
+      "shadow": "#c48566",
+      "word": "light",
+      "source": "ref-01",
+      "sources": [
+        "ref-01"
+      ],
+      "kind": "anime",
+      "images": 1,
+      "of": 1,
+      "confidence": 0.5,
+      "control": {
+        "verdict": "accord",
+        "danbooru": [
+          [
+            "colored",
+            0.09
+          ],
+          [
+            "blue",
+            0.08
+          ],
+          [
+            "dark",
+            0.03
+          ]
+        ],
+        "wiki": []
+      },
+      "locked": true,
+      "measures": [
+        {
+          "ref": "ref-01",
+          "base": "#fdd792",
+          "word": "light",
+          "share": 0.76
+        }
+      ]
+    }
+  },
+  "not_measured": [
+    "eyes"
+  ],
+  "outfits": [],
+  "outfit_note": "varie selon l'arc",
+  "outfit_colors": {
+    "top": [
+      {
+        "base": "#5a5da4",
+        "word": "blue",
+        "images": 1,
+        "volumes": [],
+        "anime": true
+      }
+    ]
+  },
+  "words": {
+    "danbooru_tag": "tony_tony_chopper",
+    "wiki_page": "Tony Tony Chopper",
+    "wiki": "onepiece.fandom.com",
+    "hair": {
+      "danbooru": [
+        [
+          "black",
+          0.5042935206869633
+        ],
+        [
+          "blonde",
+          0.36377829820452773
+        ],
+        [
+          "orange",
+          0.34933645589383294
+        ],
+        [
+          "green",
+          0.3481654957064793
+        ],
+        [
+          "blue",
+          0.16744730679156908
+        ],
+        [
+          "white",
+          0.053864168618266976
+        ],
+        [
+          "pink",
+          0.04410616705698673
+        ],
+        [
+          "brown",
+          0.0351288056206089
+        ],
+        [
+          "red",
+          0.0351288056206089
+        ]
+      ],
+      "wiki": []
+    },
+    "eyes": {
+      "danbooru": [
+        [
+          "blue",
+          0.09484777517564402
+        ],
+        [
+          "black",
+          0.06323185011709602
+        ],
+        [
+          "brown",
+          0.053473848555815766
+        ],
+        [
+          "orange",
+          0.04449648711943794
+        ]
+      ],
+      "wiki": []
+    },
+    "skin": {
+      "danbooru": [
+        [
+          "colored",
+          0.08508977361436378
+        ],
+        [
+          "blue",
+          0.078064012490242
+        ],
+        [
+          "dark",
+          0.03317720530835285
+        ]
+      ],
+      "wiki": []
+    }
+  },
+  "refs": [
+    {
+      "kind": "anime",
+      "origin": "anilist",
+      "url": "https://s4.anilist.co/file/anilistcdn/character/large/b309-H64NhbJ2ywIQ.jpg",
+      "page": "https://anilist.co/character/309",
+      "box": null,
+      "id": "ref-01",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "parts_problems": [
+        "cheveux repris au-dessus du visage"
+      ],
+      "measured": {
+        "skin": "#fdd792",
+        "hair": "#fa6180",
+        "hair_candidates": [
+          "#fa6180",
+          "#ca4262"
+        ],
+        "top": "#5a5da4"
+      }
+    }
+  ],
+  "updated": "2026-11-23T16:18:33+00:00"
+}

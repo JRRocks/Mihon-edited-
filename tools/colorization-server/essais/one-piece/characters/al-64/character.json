@@ -1,0 +1,490 @@
+{
+  "id": "al-64",
+  "anilist_id": 64,
+  "names": {
+    "main": "Franky",
+    "anilist": "Franky",
+    "native": "フランキー",
+    "aliases": [
+      "Cyborg",
+      "Bakanky",
+      "Iron Man",
+      "Fraland",
+      "Franosuke",
+      "Frankie"
+    ]
+  },
+  "role": "main",
+  "status": "to_review",
+  "doubts": [
+    "Cheveux : les couvertures (bleu) et l'image AniList (blanc) ne s'accordent pas."
+  ],
+  "parts": {
+    "hair": {
+      "base": "#589dc9",
+      "shadow": "#4788af",
+      "highlight": "#6db4da",
+      "word": "blue",
+      "source": "ref-03",
+      "sources": [
+        "ref-02",
+        "ref-03"
+      ],
+      "kind": "volume_cover",
+      "images": 2,
+      "of": 2,
+      "confidence": 0.75,
+      "control": {
+        "verdict": "accord",
+        "danbooru": [
+          [
+            "black",
+            0.57
+          ],
+          [
+            "blue",
+            0.52
+          ],
+          [
+            "blonde",
+            0.46
+          ],
+          [
+            "orange",
+            0.42
+          ]
+        ],
+        "wiki": [
+          [
+            "blue",
+            1
+          ]
+        ]
+      },
+      "locked": true,
+      "measures": [
+        {
+          "ref": "ref-01",
+          "base": "#b9d9dd",
+          "word": "white",
+          "share": 0.28
+        },
+        {
+          "ref": "ref-02",
+          "base": "#6dafcf",
+          "word": "blue",
+          "share": 0.35
+        },
+        {
+          "ref": "ref-02",
+          "base": "#86c4dd",
+          "word": "aqua",
+          "share": 0.21
+        },
+        {
+          "ref": "ref-03",
+          "base": "#438bc3",
+          "word": "blue",
+          "share": 0.19
+        },
+        {
+          "ref": "ref-03",
+          "base": "#2ab4aa",
+          "word": "aqua",
+          "share": 0.14
+        }
+      ]
+    },
+    "eyes": {
+      "base": "#231d1c",
+      "highlight": "#a29895",
+      "word": "black",
+      "source": "ref-01",
+      "sources": [
+        "ref-01",
+        "ref-02"
+      ],
+      "kind": "volume_cover",
+      "images": 2,
+      "of": 2,
+      "confidence": 0.75,
+      "control": {
+        "verdict": "sans mot de contrôle",
+        "danbooru": [
+          [
+            "blue",
+            0.11
+          ],
+          [
+            "orange",
+            0.05
+          ],
+          [
+            "black",
+            0.05
+          ],
+          [
+            "brown",
+            0.05
+          ]
+        ],
+        "wiki": []
+      },
+      "locked": true,
+      "measures": [
+        {
+          "ref": "ref-01",
+          "base": "#2a201e",
+          "word": "black",
+          "share": 0.26
+        },
+        {
+          "ref": "ref-02",
+          "base": "#1b1a19",
+          "word": "black",
+          "share": 0.09
+        }
+      ]
+    },
+    "skin": {
+      "base": "#f5caa3",
+      "shadow": "#e6ac86",
+      "highlight": "#f9e4cc",
+      "word": "light",
+      "source": "ref-01",
+      "sources": [
+        "ref-01",
+        "ref-03"
+      ],
+      "kind": "volume_cover",
+      "images": 2,
+      "of": 3,
+      "confidence": 0.5,
+      "control": {
+        "verdict": "mots trop faibles",
+        "danbooru": [
+          [
+            "colored",
+            0.18
+          ],
+          [
+            "blue",
+            0.17
+          ],
+          [
+            "dark",
+            0.05
+          ]
+        ],
+        "wiki": []
+      },
+      "locked": true,
+      "measures": [
+        {
+          "ref": "ref-01",
+          "base": "#f3cb9e",
+          "word": "light",
+          "share": 0.59
+        },
+        {
+          "ref": "ref-02",
+          "base": "#d69d7a",
+          "word": "tan",
+          "share": 0.37
+        },
+        {
+          "ref": "ref-03",
+          "base": "#f7c9a7",
+          "word": "light",
+          "share": 0.43
+        }
+      ]
+    }
+  },
+  "not_measured": [],
+  "outfits": [],
+  "outfit_note": "varie selon l'arc",
+  "outfit_colors": {
+    "top": [
+      {
+        "base": "#26313d",
+        "word": "black",
+        "images": 1,
+        "volumes": [
+          "84"
+        ],
+        "anime": false
+      }
+    ],
+    "bottom": [
+      {
+        "base": "#2f3a45",
+        "word": "black",
+        "images": 1,
+        "volumes": [
+          "84"
+        ],
+        "anime": false
+      }
+    ]
+  },
+  "words": {
+    "danbooru_tag": "franky_(one_piece)",
+    "wiki_page": "Franky",
+    "wiki": "onepiece.fandom.com",
+    "hair": {
+      "danbooru": [
+        [
+          "black",
+          0.5676855895196506
+        ],
+        [
+          "blue",
+          0.5152838427947598
+        ],
+        [
+          "blonde",
+          0.4576419213973799
+        ],
+        [
+          "orange",
+          0.41746724890829695
+        ],
+        [
+          "green",
+          0.40873362445414846
+        ],
+        [
+          "white",
+          0.06200873362445415
+        ],
+        [
+          "pink",
+          0.048034934497816595
+        ],
+        [
+          "red",
+          0.04716157205240175
+        ],
+        [
+          "brown",
+          0.03580786026200873
+        ]
+      ],
+      "wiki": [
+        [
+          "blue",
+          1
+        ]
+      ]
+    },
+    "eyes": {
+      "danbooru": [
+        [
+          "blue",
+          0.1091703056768559
+        ],
+        [
+          "orange",
+          0.05240174672489083
+        ],
+        [
+          "black",
+          0.050655021834061134
+        ],
+        [
+          "brown",
+          0.045414847161572056
+        ]
+      ],
+      "wiki": []
+    },
+    "skin": {
+      "danbooru": [
+        [
+          "colored",
+          0.17729257641921398
+        ],
+        [
+          "blue",
+          0.16593886462882096
+        ],
+        [
+          "dark",
+          0.05152838427947598
+        ]
+      ],
+      "wiki": []
+    }
+  },
+  "refs": [
+    {
+      "kind": "anime",
+      "origin": "anilist",
+      "url": "https://s4.anilist.co/file/anilistcdn/character/large/n64-ChX6ZzHHjXqA.png",
+      "page": "https://anilist.co/character/64",
+      "box": null,
+      "id": "ref-01",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "parts_problems": [
+        "cheveux repris au-dessus du visage"
+      ],
+      "measured": {
+        "skin": "#f3cb9e",
+        "hair": "#b9d9dd",
+        "eyes": "#2a201e"
+      }
+    },
+    {
+      "kind": "volume_cover",
+      "origin": "mangadex",
+      "volume": "64",
+      "url": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/3c5b0206-52a2-44ad-bce5-bd7acb385934.png",
+      "thumbnail": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/3c5b0206-52a2-44ad-bce5-bd7acb385934.png.256.jpg",
+      "box": [
+        609,
+        545,
+        1106,
+        991
+      ],
+      "head": [
+        763,
+        580,
+        914,
+        823
+      ],
+      "body": [
+        624,
+        560,
+        1092,
+        977
+      ],
+      "match": {
+        "by": "official",
+        "difference": 0.073,
+        "gap": 0.145
+      },
+      "id": "ref-02",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "measured": {
+        "skin": "#d69d7a",
+        "hair": "#6dafcf",
+        "hair_candidates": [
+          "#6dafcf",
+          "#86c4dd"
+        ],
+        "eyes": "#1b1a19"
+      }
+    },
+    {
+      "kind": "volume_cover",
+      "origin": "mangadex",
+      "volume": "84",
+      "url": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/81362302-608a-4efa-8744-0df6f8cbde7f.png",
+      "thumbnail": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/81362302-608a-4efa-8744-0df6f8cbde7f.png.256.jpg",
+      "box": [
+        946,
+        1476,
+        1656,
+        2606
+      ],
+      "head": [
+        1233,
+        1562,
+        1496,
+        1825
+      ],
+      "body": [
+        979,
+        1509,
+        1655,
+        2604
+      ],
+      "match": {
+        "by": "official",
+        "difference": 0.086,
+        "gap": 0.145
+      },
+      "id": "ref-03",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "measured": {
+        "skin": "#f7c9a7",
+        "hair": "#438bc3",
+        "hair_candidates": [
+          "#438bc3",
+          "#2ab4aa"
+        ],
+        "top": "#26313d",
+        "bottom": "#2f3a45"
+      }
+    },
+    {
+      "kind": "volume_cover",
+      "origin": "mangadex",
+      "volume": "37",
+      "url": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/4451e697-e861-47fc-b01e-958b305701b5.png",
+      "thumbnail": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/4451e697-e861-47fc-b01e-958b305701b5.png.256.jpg",
+      "box": [
+        99,
+        561,
+        910,
+        1447
+      ],
+      "head": [
+        256,
+        718,
+        754,
+        1239
+      ],
+      "body": null,
+      "match": {
+        "by": "official",
+        "difference": 0.057,
+        "gap": 0.178
+      },
+      "id": "ref-04",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "parts_problems": [
+        "visage introuvable"
+      ],
+      "measured": {}
+    },
+    {
+      "kind": "volume_cover",
+      "origin": "mangadex",
+      "volume": "92",
+      "url": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/875ee51d-bed5-4224-b9d0-ce8579d2167b.png",
+      "thumbnail": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/875ee51d-bed5-4224-b9d0-ce8579d2167b.png.256.jpg",
+      "box": [
+        533,
+        1768,
+        1182,
+        2594
+      ],
+      "head": [
+        679,
+        1914,
+        1037,
+        2400
+      ],
+      "body": null,
+      "match": {
+        "by": "official",
+        "difference": 0.067,
+        "gap": 0.136
+      },
+      "id": "ref-05",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "parts_problems": [
+        "visage introuvable"
+      ],
+      "measured": {}
+    }
+  ],
+  "updated": "2026-11-23T16:18:33+00:00"
+}

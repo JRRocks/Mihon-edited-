@@ -149,3 +149,13 @@ def test_shades_of_one_color_are_one_group():
     observations = [obs("#6dafcf"), obs("#438bc3"), obs("#8fd0fc")]
     entry, doubts = rules.settle_part("hair", observations)
     assert entry["word"] == "blue" and entry["images"] >= 2
+
+
+def test_only_the_main_control_word_chooses_between_measures():
+    # Usopp: the knitted cap is yellow, "blonde hair" rides along on his pictures (other characters), black leads
+    observations = [obs("#2d3baa", "anime", ref="anilist", weight=0.5), obs("#dac723", "anime", ref="anilist",
+                                                                             weight=0.3)]
+    words = {"danbooru": [("black", 0.55), ("blonde", 0.30)]}
+    entry, doubts = rules.settle_part("hair", observations, words)
+    assert entry["word"] != "blonde"
+    assert rules.check_words("hair", entry, words)[0] == "désaccord"

@@ -120,11 +120,14 @@ def write(series_folder: Path, report_folder: Path):
     covers = research["covers"]
     anilist = sum(1 for c in characters for r in c["refs"] if r["kind"] == "anime" and r.get("measured"))
     crops = sum(1 for c in characters for r in c["refs"] if r["kind"] == "volume_cover" and r.get("measured"))
+    cover_files = len({r["url"] for c in characters for r in c["refs"]
+                       if r["kind"] == "volume_cover" and r.get("measured")})
     w("| | |")
     w("|---|---|")
     w(f"| **Temps total** | {duration(research['duration_s'])} |")
-    w(f"| **Images utilisées** | {research['images_used']} : {anilist} images AniList et {crops} recadrages sur "
-      f"{covers['sampled']} couvertures japonaises (sur {covers['available']}) |")
+    w(f"| **Images utilisées** | {research['images_used']} : {anilist} images AniList et {cover_files} couvertures "
+      f"japonaises, où {crops} personnages ont été recadrés et mesurés ({covers['sampled']} couvertures examinées "
+      f"sur {covers['available']}, {research['heads_on_covers']} têtes détectées) |")
     w(f"| **Personnages en doute** | {len(in_doubt)} sur {len(characters)} |")
     ids = series["ids"]
     checks = series["identity"]["checks"]
@@ -257,8 +260,8 @@ def outfit_text(c, swatches):
             name = f"{c['id']}-outfit-{part}.svg"
             (swatches / name).write_text(swatch_svg([entry.get("base"), entry.get("shadow"),
                                                      entry.get("highlight")]), encoding="utf-8")
-            parts.append(f"{FR_PART[part].lower()} ![{part}](pastilles/{name}) {code(entry['base'])} "
-                         f"({source_text(entry)})")
+            parts.append(f"{FR_PART[part].lower()} ![{part}](pastilles/{name}) {code(entry['base'])}, "
+                         f"{source_text(entry)}")
     text = "Tenue courante : " + " ; ".join(parts) + "." if parts else ""
     if c.get("outfit_note"):
         seen = []

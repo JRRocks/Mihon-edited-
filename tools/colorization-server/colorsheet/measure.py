@@ -206,6 +206,20 @@ def tone_candidates(lab, max_candidates=3, min_share=0.12):
     return out
 
 
+def iris_tone(lab):
+    """The color of the eyes is the iris: when the pupil and lashes (near black) are the most frequent tone but a
+    colored tone holds a fair share of the eye, that colored tone is the eye color."""
+    peaks = tone_peaks(lab)
+    if not peaks or lch(peaks[0][0])[0] >= 0.32:
+        return None
+    colored = [(t, share) for t, share in peaks[1:] if lch(t)[1] >= 0.05 and share >= 0.15]
+    if not colored:
+        return None
+    tone, share = colored[0]
+    shadow, highlight = _shadow_highlight(tone, share, [p for p in peaks if p[0] is not tone])
+    return {"base": tone, "shadow": shadow, "highlight": highlight, "share": share}
+
+
 # Minimum clean pixels for a part to be measured on one image
 MIN_PIXELS = {"eyes": 12, "skin": 60, "hair": 80, "top": 120, "bottom": 120}
 
@@ -235,6 +249,11 @@ def measure_part(rgb, mask, part, exclude=None, candidates=False):
         for tones in found:
             tones["pixels"] = int(len(lab))
         return found or None
+    if part == "eyes":
+        iris = iris_tone(lab)
+        if iris is not None:
+            iris["pixels"] = int(len(lab))
+            return iris
     tones = three_tones(lab)
     if tones is None:
         return None

@@ -121,7 +121,7 @@ def _choose(part, groups, words, name, doubts):
     if len(groups) < 2:
         return chosen
     first, second = word_of(part, groups[0]["value"]), word_of(part, groups[1]["value"])
-    if words and not agrees_with_words(part, first, words) and agrees_with_words(part, second, words):
+    if words and not agrees_with_words(part, first, words) and agrees_with_main_words(part, second, words):
         doubts.append(f"{name} : deux couleurs dans la zone mesurée ({fr(first)} sur {len(groups[0]['members'])} "
                       f"image(s), {fr(second)} sur {len(groups[1]['members'])}), sans doute un chapeau ou le fond ; "
                       f"{fr(second)} retenu parce que les mots de contrôle le confirment.")
@@ -171,7 +171,7 @@ def settle_part(part, observations, words=None):
     # No two images agree: the best-ranked image, and among its tones the one the control words confirm, if any
     ranked = sorted(observations, key=lambda o: (KIND_RANK.get(o["kind"], 9), -o.get("weight", 1.0)))
     own = [o for o in ranked if o["ref"] == ranked[0]["ref"]]
-    confirmed = [o for o in own if words and agrees_with_words(part, word_of(part, o["lab"]), words)]
+    confirmed = [o for o in own if words and agrees_with_main_words(part, word_of(part, o["lab"]), words)]
     best = (confirmed or own)[0]
     entry, _ = _entry(part, [best], total, best["kind"])
     picked = " (parmi ses tons, celui que confirment les mots de contrôle)" if confirmed and best is not own[0] else ""
@@ -201,6 +201,13 @@ def control_words(part, words):
 def agrees_with_words(part, word, words):
     danbooru, wiki = control_words(part, words)
     return any(words_agree(part, word, w) for w, _ in danbooru + wiki)
+
+
+def agrees_with_main_words(part, word, words):
+    """Agrees with the main control word of each source (Danbooru's most frequent tag, the wiki's most frequent
+    word): only those may choose between two measures, the weaker tags often belong to other characters."""
+    danbooru, wiki = control_words(part, words)
+    return any(words_agree(part, word, w) for w, _ in danbooru[:1] + wiki[:1])
 
 
 def check_words(part, entry, words):

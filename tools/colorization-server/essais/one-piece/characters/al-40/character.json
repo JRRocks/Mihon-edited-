@@ -1,0 +1,876 @@
+{
+  "id": "al-40",
+  "anilist_id": 40,
+  "names": {
+    "main": "Monkey D. Luffy",
+    "anilist": "Luffy Monkey",
+    "native": "モンキー・D・ルフィ",
+    "aliases": [
+      "Mugiwara (麦わら)",
+      "Straw Hat",
+      "Mugi (麦)",
+      "Straw",
+      "Mugiwara no Luffy (麦わらのルフィ)",
+      "Straw Hat Luffy",
+      "Lucy",
+      "Luffyland",
+      "Mugiwara-ya",
+      "Ruffy",
+      "Monkey D. Rufy",
+      "Rufy",
+      "Rubber"
+    ]
+  },
+  "role": "main",
+  "status": "to_review",
+  "doubts": [
+    "Cheveux : deux couleurs dans la zone mesurée (orange sur 4 image(s), noir sur 3), sans doute un chapeau ou le fond ; noir retenu parce que les mots de contrôle le confirment.",
+    "Cheveux : les couvertures (noir) et l'image AniList (orange) ne s'accordent pas.",
+    "Yeux : les 3 images ne s'accordent pas ; la couleur retenue vient d'une seule (couverture)."
+  ],
+  "parts": {
+    "hair": {
+      "base": "#030001",
+      "highlight": "#e6dcd9",
+      "word": "black",
+      "source": "ref-09",
+      "sources": [
+        "ref-03",
+        "ref-05",
+        "ref-09"
+      ],
+      "kind": "volume_cover",
+      "images": 3,
+      "of": 7,
+      "confidence": 0.38,
+      "control": {
+        "verdict": "accord",
+        "danbooru": [
+          [
+            "black",
+            0.67
+          ],
+          [
+            "orange",
+            0.24
+          ],
+          [
+            "blonde",
+            0.22
+          ],
+          [
+            "green",
+            0.2
+          ]
+        ],
+        "wiki": [
+          [
+            "black",
+            1
+          ]
+        ]
+      },
+      "locked": true,
+      "measures": [
+        {
+          "ref": "ref-01",
+          "base": "#d48d56",
+          "word": "orange",
+          "share": 0.41
+        },
+        {
+          "ref": "ref-01",
+          "base": "#b97c51",
+          "word": "orange",
+          "share": 0.13
+        },
+        {
+          "ref": "ref-01",
+          "base": "#e99b6a",
+          "word": "orange",
+          "share": 0.15
+        },
+        {
+          "ref": "ref-02",
+          "base": "#fda246",
+          "word": "orange",
+          "share": 0.21
+        },
+        {
+          "ref": "ref-02",
+          "base": "#f6772d",
+          "word": "orange",
+          "share": 0.23
+        },
+        {
+          "ref": "ref-02",
+          "base": "#f2ccaa",
+          "word": "orange",
+          "share": 0.15
+        },
+        {
+          "ref": "ref-03",
+          "base": "#fefefe",
+          "word": "white",
+          "share": 0.43
+        },
+        {
+          "ref": "ref-03",
+          "base": "#000000",
+          "word": "black",
+          "share": 0.32
+        },
+        {
+          "ref": "ref-03",
+          "base": "#010101",
+          "word": "black",
+          "share": 0.14
+        },
+        {
+          "ref": "ref-04",
+          "base": "#111833",
+          "word": "black",
+          "share": 0.82
+        },
+        {
+          "ref": "ref-05",
+          "base": "#050000",
+          "word": "black",
+          "share": 0.46
+        },
+        {
+          "ref": "ref-07",
+          "base": "#e8ba91",
+          "word": "orange",
+          "share": 0.4
+        },
+        {
+          "ref": "ref-07",
+          "base": "#fc8988",
+          "word": "red",
+          "share": 0.15
+        },
+        {
+          "ref": "ref-08",
+          "base": "#d6ac7f",
+          "word": "orange",
+          "share": 0.23
+        },
+        {
+          "ref": "ref-09",
+          "base": "#030001",
+          "word": "black",
+          "share": 0.27
+        },
+        {
+          "ref": "ref-09",
+          "base": "#fcd7b2",
+          "word": "orange",
+          "share": 0.23
+        },
+        {
+          "ref": "ref-09",
+          "base": "#84e7b0",
+          "word": "green",
+          "share": 0.19
+        }
+      ]
+    },
+    "eyes": {
+      "base": "#1b1104",
+      "shadow": "#100500",
+      "highlight": "#312413",
+      "word": "black",
+      "source": "ref-09",
+      "sources": [
+        "ref-09"
+      ],
+      "kind": "volume_cover",
+      "images": 1,
+      "of": 3,
+      "confidence": 0.17,
+      "control": {
+        "verdict": "accord",
+        "danbooru": [
+          [
+            "black",
+            0.08
+          ],
+          [
+            "blue",
+            0.06
+          ],
+          [
+            "brown",
+            0.06
+          ],
+          [
+            "red",
+            0.04
+          ]
+        ],
+        "wiki": [
+          [
+            "black",
+            1
+          ]
+        ]
+      },
+      "locked": true,
+      "measures": [
+        {
+          "ref": "ref-07",
+          "base": "#cfc2d4",
+          "word": "grey",
+          "share": 0.15
+        },
+        {
+          "ref": "ref-08",
+          "base": "#7a7064",
+          "word": "grey",
+          "share": 0.17
+        },
+        {
+          "ref": "ref-09",
+          "base": "#1b1104",
+          "word": "black",
+          "share": 0.26
+        }
+      ]
+    },
+    "skin": {
+      "base": "#fbd5b0",
+      "shadow": "#f8b392",
+      "highlight": "#fde0c6",
+      "word": "light",
+      "source": "ref-03",
+      "sources": [
+        "ref-02",
+        "ref-03",
+        "ref-04",
+        "ref-05",
+        "ref-07",
+        "ref-08",
+        "ref-09"
+      ],
+      "kind": "volume_cover",
+      "images": 7,
+      "of": 7,
+      "confidence": 0.99,
+      "control": {
+        "verdict": "accord",
+        "danbooru": [
+          [
+            "colored",
+            0.04
+          ],
+          [
+            "blue",
+            0.03
+          ],
+          [
+            "dark",
+            0.02
+          ]
+        ],
+        "wiki": []
+      },
+      "locked": true,
+      "measures": [
+        {
+          "ref": "ref-01",
+          "base": "#fde5b6",
+          "word": "pale",
+          "share": 0.61
+        },
+        {
+          "ref": "ref-02",
+          "base": "#feecd5",
+          "word": "pale",
+          "share": 0.76
+        },
+        {
+          "ref": "ref-03",
+          "base": "#fdd3b0",
+          "word": "light",
+          "share": 0.61
+        },
+        {
+          "ref": "ref-04",
+          "base": "#fbf1e6",
+          "word": "pale",
+          "share": 0.42
+        },
+        {
+          "ref": "ref-05",
+          "base": "#fcbd9a",
+          "word": "light",
+          "share": 0.57
+        },
+        {
+          "ref": "ref-07",
+          "base": "#fde3cc",
+          "word": "pale",
+          "share": 0.51
+        },
+        {
+          "ref": "ref-08",
+          "base": "#fcd2a2",
+          "word": "light",
+          "share": 0.65
+        },
+        {
+          "ref": "ref-09",
+          "base": "#fbaf77",
+          "word": "light",
+          "share": 0.64
+        }
+      ]
+    }
+  },
+  "not_measured": [],
+  "outfits": [
+    {
+      "id": "default",
+      "name": "tenue courante",
+      "chapters": null,
+      "parts": {
+        "bottom": {
+          "base": "#fb4b54",
+          "shadow": "#ab4b56",
+          "highlight": "#fbfbfb",
+          "word": "red",
+          "source": "ref-07",
+          "sources": [
+            "ref-01",
+            "ref-03",
+            "ref-07"
+          ],
+          "kind": "volume_cover",
+          "images": 3,
+          "of": 3,
+          "confidence": 0.88
+        }
+      }
+    }
+  ],
+  "outfit_note": "varie selon l'arc",
+  "outfit_colors": {
+    "top": [
+      {
+        "base": "#e18666",
+        "word": "orange",
+        "images": 3,
+        "volumes": [
+          "60",
+          "64",
+          "76"
+        ],
+        "anime": false
+      },
+      {
+        "base": "#fceb71",
+        "word": "yellow",
+        "images": 1,
+        "volumes": [
+          "17"
+        ],
+        "anime": false
+      },
+      {
+        "base": "#fbf6f8",
+        "word": "white",
+        "images": 1,
+        "volumes": [
+          "68"
+        ],
+        "anime": false
+      },
+      {
+        "base": "#2fbfc5",
+        "word": "aqua",
+        "images": 1,
+        "volumes": [
+          "53"
+        ],
+        "anime": false
+      }
+    ],
+    "bottom": [
+      {
+        "base": "#fb4b54",
+        "word": "red",
+        "images": 3,
+        "volumes": [
+          "53",
+          "60"
+        ],
+        "anime": true
+      }
+    ]
+  },
+  "words": {
+    "danbooru_tag": "monkey_d._luffy",
+    "wiki_page": "Monkey D. Luffy",
+    "wiki": "onepiece.fandom.com",
+    "hair": {
+      "danbooru": [
+        [
+          "black",
+          0.6658
+        ],
+        [
+          "orange",
+          0.245
+        ],
+        [
+          "blonde",
+          0.2212
+        ],
+        [
+          "green",
+          0.2028
+        ],
+        [
+          "white",
+          0.1168
+        ],
+        [
+          "blue",
+          0.0692
+        ],
+        [
+          "red",
+          0.0466
+        ],
+        [
+          "pink",
+          0.0364
+        ],
+        [
+          "brown",
+          0.0254
+        ]
+      ],
+      "wiki": [
+        [
+          "black",
+          1
+        ]
+      ]
+    },
+    "eyes": {
+      "danbooru": [
+        [
+          "black",
+          0.0798
+        ],
+        [
+          "blue",
+          0.0588
+        ],
+        [
+          "brown",
+          0.0574
+        ],
+        [
+          "red",
+          0.0424
+        ],
+        [
+          "orange",
+          0.0386
+        ],
+        [
+          "yellow",
+          0.0248
+        ]
+      ],
+      "wiki": [
+        [
+          "black",
+          1
+        ]
+      ]
+    },
+    "skin": {
+      "danbooru": [
+        [
+          "colored",
+          0.0414
+        ],
+        [
+          "blue",
+          0.0302
+        ],
+        [
+          "dark",
+          0.0242
+        ]
+      ],
+      "wiki": []
+    }
+  },
+  "refs": [
+    {
+      "kind": "anime",
+      "origin": "anilist",
+      "url": "https://s4.anilist.co/file/anilistcdn/character/large/b40-MNypXsxSRb1R.png",
+      "page": "https://anilist.co/character/40",
+      "box": null,
+      "id": "ref-01",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "measured": {
+        "skin": "#fde5b6",
+        "hair": "#d48d56",
+        "hair_candidates": [
+          "#d48d56",
+          "#b97c51",
+          "#e99b6a"
+        ],
+        "bottom": "#e7261e"
+      }
+    },
+    {
+      "kind": "volume_cover",
+      "origin": "mangadex",
+      "volume": "96",
+      "url": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/2e0e7bbd-6038-42ba-9691-f3ca7ba94590.png",
+      "thumbnail": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/2e0e7bbd-6038-42ba-9691-f3ca7ba94590.png.256.jpg",
+      "box": [
+        381,
+        1601,
+        1224,
+        2260
+      ],
+      "head": [
+        524,
+        1665,
+        1074,
+        2199
+      ],
+      "body": [
+        405,
+        1625,
+        1201,
+        2237
+      ],
+      "match": {
+        "by": "official",
+        "difference": 0.064,
+        "gap": 0.159
+      },
+      "id": "ref-02",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "measured": {
+        "skin": "#feecd5",
+        "hair": "#fda246",
+        "hair_candidates": [
+          "#fda246",
+          "#f6772d",
+          "#f2ccaa"
+        ]
+      }
+    },
+    {
+      "kind": "volume_cover",
+      "origin": "mangadex",
+      "volume": "60",
+      "url": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/67bfe0df-f92e-47a0-b467-122c0ac28bbc.png",
+      "thumbnail": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/67bfe0df-f92e-47a0-b467-122c0ac28bbc.png.256.jpg",
+      "box": [
+        594,
+        1214,
+        1086,
+        2045
+      ],
+      "head": [
+        707,
+        1351,
+        984,
+        1693
+      ],
+      "body": [
+        618,
+        1238,
+        1063,
+        2022
+      ],
+      "match": {
+        "by": "official",
+        "difference": 0.068,
+        "gap": 0.15
+      },
+      "id": "ref-03",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "parts_problems": [
+        "cheveux repris au-dessus du visage"
+      ],
+      "measured": {
+        "skin": "#fdd3b0",
+        "hair": "#fefefe",
+        "hair_candidates": [
+          "#fefefe",
+          "#000000",
+          "#010101"
+        ],
+        "top": "#e26f73",
+        "bottom": "#f4807e"
+      }
+    },
+    {
+      "kind": "volume_cover",
+      "origin": "mangadex",
+      "volume": "17",
+      "url": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/b33a4105-8482-4e62-9b37-71e9092d6abe.png",
+      "thumbnail": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/b33a4105-8482-4e62-9b37-71e9092d6abe.png.256.jpg",
+      "box": [
+        434,
+        1343,
+        1436,
+        2618
+      ],
+      "head": [
+        755,
+        1410,
+        1101,
+        1722
+      ],
+      "body": [
+        472,
+        1381,
+        1399,
+        2618
+      ],
+      "match": {
+        "by": "official",
+        "difference": 0.073,
+        "gap": 0.158
+      },
+      "id": "ref-04",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "measured": {
+        "skin": "#fbf1e6",
+        "hair": "#111833",
+        "top": "#fceb71"
+      }
+    },
+    {
+      "kind": "volume_cover",
+      "origin": "mangadex",
+      "volume": "76",
+      "url": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/349c740a-f9f7-419b-a877-a244d7d5ffb5.png",
+      "thumbnail": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/349c740a-f9f7-419b-a877-a244d7d5ffb5.png.256.jpg",
+      "box": [
+        366,
+        1112,
+        991,
+        1930
+      ],
+      "head": [
+        541,
+        1197,
+        812,
+        1539
+      ],
+      "body": [
+        390,
+        1136,
+        968,
+        1907
+      ],
+      "match": {
+        "by": "official",
+        "difference": 0.077,
+        "gap": 0.129
+      },
+      "id": "ref-05",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "measured": {
+        "skin": "#fcbd9a",
+        "hair": "#050000",
+        "top": "#e3855d"
+      }
+    },
+    {
+      "kind": "volume_cover",
+      "origin": "mangadex",
+      "volume": "68",
+      "url": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/a460435b-3d13-4a3a-8699-edd0a015da27.png",
+      "thumbnail": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/a460435b-3d13-4a3a-8699-edd0a015da27.png.256.jpg",
+      "box": [
+        233,
+        1729,
+        647,
+        2381
+      ],
+      "head": [
+        351,
+        1784,
+        548,
+        1989
+      ],
+      "body": [
+        252,
+        1748,
+        629,
+        2363
+      ],
+      "match": {
+        "by": "official",
+        "difference": 0.08,
+        "gap": 0.187
+      },
+      "id": "ref-06",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "parts_problems": [
+        "visage introuvable"
+      ],
+      "measured": {
+        "top": "#fbf6f8"
+      }
+    },
+    {
+      "kind": "volume_cover",
+      "origin": "mangadex",
+      "volume": "53",
+      "url": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/fde891e0-782d-4ade-bf61-78ca50e3fa07.png",
+      "thumbnail": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/fde891e0-782d-4ade-bf61-78ca50e3fa07.png.256.jpg",
+      "box": [
+        758,
+        1252,
+        1656,
+        2392
+      ],
+      "head": [
+        1104,
+        1288,
+        1512,
+        1715
+      ],
+      "body": [
+        791,
+        1285,
+        1634,
+        2360
+      ],
+      "match": {
+        "by": "official",
+        "difference": 0.085,
+        "gap": 0.165
+      },
+      "id": "ref-07",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "parts_problems": [
+        "cheveux repris au-dessus du visage"
+      ],
+      "measured": {
+        "skin": "#fde3cc",
+        "hair": "#e8ba91",
+        "hair_candidates": [
+          "#e8ba91",
+          "#fc8988"
+        ],
+        "eyes": "#cfc2d4",
+        "top": "#2fbfc5",
+        "bottom": "#fb4b54"
+      }
+    },
+    {
+      "kind": "volume_cover",
+      "origin": "mangadex",
+      "volume": "64",
+      "url": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/3c5b0206-52a2-44ad-bce5-bd7acb385934.png",
+      "thumbnail": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/3c5b0206-52a2-44ad-bce5-bd7acb385934.png.256.jpg",
+      "box": [
+        493,
+        1178,
+        1025,
+        1728
+      ],
+      "head": [
+        712,
+        1202,
+        931,
+        1458
+      ],
+      "body": [
+        509,
+        1194,
+        1010,
+        1713
+      ],
+      "match": {
+        "by": "official",
+        "difference": 0.088,
+        "gap": 0.137
+      },
+      "id": "ref-08",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "parts_problems": [
+        "cheveux repris au-dessus du visage"
+      ],
+      "measured": {
+        "skin": "#fcd2a2",
+        "hair": "#d6ac7f",
+        "eyes": "#7a7064",
+        "top": "#f9a681"
+      }
+    },
+    {
+      "kind": "volume_cover",
+      "origin": "mangadex",
+      "volume": "9",
+      "url": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/5eec93a4-41ae-40c7-a2b4-ca5a951149ff.png",
+      "thumbnail": "https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/5eec93a4-41ae-40c7-a2b4-ca5a951149ff.png.256.jpg",
+      "box": [
+        89,
+        808,
+        969,
+        1239
+      ],
+      "head": [
+        205,
+        834,
+        827,
+        1206
+      ],
+      "body": [
+        114,
+        833,
+        945,
+        1215
+      ],
+      "match": {
+        "by": "official",
+        "difference": 0.098,
+        "gap": 0.165
+      },
+      "id": "ref-09",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "parts_problems": [
+        "cheveux repris au-dessus du visage"
+      ],
+      "measured": {
+        "skin": "#fbaf77",
+        "hair": "#030001",
+        "hair_candidates": [
+          "#030001",
+          "#fcd7b2",
+          "#84e7b0"
+        ],
+        "eyes": "#1b1104"
+      }
+    }
+  ],
+  "updated": "2026-11-23T16:18:33+00:00"
+}
