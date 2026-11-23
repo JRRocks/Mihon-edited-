@@ -1,0 +1,161 @@
+{
+  "key": "one-piece--al30013",
+  "title": "One Piece",
+  "titles": {
+    "romaji": "ONE PIECE",
+    "english": "One Piece",
+    "native": "ONE PIECE"
+  },
+  "synonyms": [
+    "원피스",
+    "וואן פיס ",
+    "One Piece - Большой куш",
+    "ワンピース",
+    "ONE PIECE～航海王～",
+    "วันพีซ"
+  ],
+  "authors": [
+    "Eiichirou Oda"
+  ],
+  "year": 1997,
+  "has_anime": true,
+  "ids": {
+    "anilist": 30013,
+    "myanimelist": 13,
+    "mangadex": "a1c7c817-4e59-43b7-9365-09675a149a6f",
+    "mangabaka": 377,
+    "mangaupdates": "pb8uwds",
+    "kitsu": "one-piece"
+  },
+  "identity": {
+    "crosschecked": true,
+    "checks": [
+      {
+        "base": "mangabaka",
+        "id": 377,
+        "anilist_id": 30013,
+        "url": "https://mangabaka.org/manga/377/ONE-PIECE",
+        "authors": [
+          "Eiichirou Oda",
+          "Eiichirou Oda"
+        ],
+        "same_author": true
+      },
+      {
+        "base": "mangadex",
+        "id": "a1c7c817-4e59-43b7-9365-09675a149a6f",
+        "anilist_id": 30013,
+        "url": "https://mangadex.org/title/a1c7c817-4e59-43b7-9365-09675a149a6f",
+        "authors": [
+          "Oda Eiichirou (尾田栄一郎)"
+        ],
+        "same_author": true
+      }
+    ],
+    "doubts": []
+  },
+  "sources": [
+    {
+      "name": "AniList",
+      "url": "https://anilist.co/manga/30013",
+      "consulted": "2026-11-23"
+    },
+    {
+      "name": "MangaBaka",
+      "url": "https://mangabaka.org/manga/377/ONE-PIECE",
+      "consulted": "2026-11-23"
+    },
+    {
+      "name": "MangaDex",
+      "url": "https://mangadex.org/title/a1c7c817-4e59-43b7-9365-09675a149a6f",
+      "consulted": "2026-11-23"
+    },
+    {
+      "name": "Danbooru",
+      "tag": "one_piece",
+      "consulted": "2026-11-23"
+    },
+    {
+      "name": "Fandom",
+      "wiki": "onepiece.fandom.com",
+      "consulted": "2026-11-23"
+    }
+  ],
+  "characters": [
+    "al-40",
+    "al-62",
+    "al-723",
+    "al-724",
+    "al-305",
+    "al-61",
+    "al-309",
+    "al-64",
+    "al-5627",
+    "al-18938"
+  ],
+  "style": null,
+  "status": "to_review",
+  "research": {
+    "date": "2026-11-23T16:18:33+00:00",
+    "tool": "tools/colorization-server/color_sheet.py",
+    "covers": {
+      "sampled": 30,
+      "available": 116,
+      "locale": "ja",
+      "volumes": [
+        "1",
+        "5",
+        "9",
+        "13",
+        "17",
+        "21",
+        "25",
+        "29",
+        "33",
+        "37",
+        "41",
+        "45",
+        "49",
+        "53",
+        "57",
+        "60",
+        "64",
+        "68",
+        "72",
+        "76",
+        "80",
+        "84",
+        "88",
+        "92",
+        "96",
+        "100",
+        "104",
+        "108",
+        "112",
+        "116"
+      ]
+    },
+    "images_used": 23,
+    "black_and_white_dropped": [],
+    "heads_on_covers": 193,
+    "parts_method": "see-through",
+    "characters": 10,
+    "to_review": 9,
+    "notes": [],
+    "models": [
+      "deepghs/anime_person_detection person_detect_v1.3_s",
+      "deepghs/anime_head_detection head_detect_v2.0_s",
+      "deepghs/ccip_onnx ccip-caformer_b36-24",
+      "24yearsold/l2d_sam_iter2 (See-through)"
+    ],
+    "requests": 128,
+    "stages_s": {
+      "identité et mots de contrôle": 40.4,
+      "téléchargement des images": 44.7,
+      "reconnaissance des personnages": 154.8,
+      "découpage et mesure des couleurs": 376.0,
+      "fiche": 0.0
+    },
+    "duration_s": 616.0
+  }
+}

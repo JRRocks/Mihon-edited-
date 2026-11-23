@@ -1,0 +1,160 @@
+{
+  "id": "al-5627",
+  "anilist_id": 5627,
+  "names": {
+    "main": "Brook",
+    "anilist": "Brook",
+    "native": "ブルック",
+    "aliases": [
+      "Dead Bones",
+      "Soul King",
+      "Satan-sama",
+      "Boneland",
+      "Honekichi",
+      "Bonekichi",
+      "The Starving Skeleton",
+      "Humming Brook"
+    ]
+  },
+  "role": "main",
+  "status": "to_review",
+  "doubts": [
+    "Aucune couleur de cheveux, d'yeux ni de peau n'a pu être mesurée : le découpage n'a pas trouvé de visage sur les images de ce personnage."
+  ],
+  "parts": {},
+  "not_measured": [
+    "hair",
+    "eyes",
+    "skin"
+  ],
+  "outfits": [],
+  "outfit_note": "varie selon l'arc",
+  "outfit_colors": {
+    "top": [
+      {
+        "base": "#3f73e4",
+        "word": "blue",
+        "images": 1,
+        "volumes": [],
+        "anime": true
+      }
+    ],
+    "bottom": [
+      {
+        "base": "#386bd8",
+        "word": "blue",
+        "images": 1,
+        "volumes": [],
+        "anime": true
+      }
+    ]
+  },
+  "words": {
+    "danbooru_tag": "brook_(one_piece)",
+    "wiki_page": "Brook",
+    "wiki": "onepiece.fandom.com",
+    "hair": {
+      "danbooru": [
+        [
+          "black",
+          0.6829665851670742
+        ],
+        [
+          "blonde",
+          0.4180929095354523
+        ],
+        [
+          "orange",
+          0.38875305623471884
+        ],
+        [
+          "green",
+          0.37489812550937246
+        ],
+        [
+          "blue",
+          0.267318663406683
+        ],
+        [
+          "white",
+          0.06438467807660962
+        ],
+        [
+          "pink",
+          0.05623471882640587
+        ],
+        [
+          "red",
+          0.042379788101059496
+        ],
+        [
+          "brown",
+          0.03667481662591687
+        ]
+      ],
+      "wiki": []
+    },
+    "eyes": {
+      "danbooru": [
+        [
+          "blue",
+          0.08475957620211899
+        ],
+        [
+          "orange",
+          0.04726976365118175
+        ],
+        [
+          "brown",
+          0.04156479217603912
+        ],
+        [
+          "black",
+          0.030969845150774247
+        ],
+        [
+          "red",
+          0.02526487367563162
+        ]
+      ],
+      "wiki": []
+    },
+    "skin": {
+      "danbooru": [
+        [
+          "colored",
+          0.17685411572942136
+        ],
+        [
+          "blue",
+          0.16381418092909536
+        ],
+        [
+          "dark",
+          0.035859820700896494
+        ]
+      ],
+      "wiki": []
+    }
+  },
+  "refs": [
+    {
+      "kind": "anime",
+      "origin": "anilist",
+      "url": "https://s4.anilist.co/file/anilistcdn/character/large/b5627-av8oD3zhKvDl.png",
+      "page": "https://anilist.co/character/5627",
+      "box": null,
+      "id": "ref-01",
+      "added": "2026-11-23",
+      "parts_method": "see-through",
+      "parts_problems": [
+        "visage introuvable"
+      ],
+      "measured": {
+        "top": "#3f73e4",
+        "bottom": "#386bd8"
+      }
+    }
+  ],
+  "updated": "2026-11-23T16:18:33+00:00"
+}

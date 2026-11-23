@@ -1,0 +1,42 @@
+{"date": "2026-11-23T16:18:33+00:00", "what": "series", "value": "one-piece--al30013", "from": "recherche automatique"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "outfit_note", "value": "varie selon l'arc", "from": "recherche automatique", "character": "al-40"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "outfits.default.bottom", "value": ["#fb4b54", "#ab4b56", "#fbfbfb"], "from": "recherche automatique", "character": "al-40"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.eyes", "value": ["#1b1104", "#100500", "#312413"], "from": "recherche automatique, 1 image(s) sur 3 : ref-09", "character": "al-40"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.hair", "value": ["#030001", null, "#e6dcd9"], "from": "recherche automatique, 3 image(s) sur 7 : ref-03, ref-05, ref-09", "character": "al-40"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.skin", "value": ["#fbd5b0", "#f8b392", "#fde0c6"], "from": "recherche automatique, 7 image(s) sur 7 : ref-02, ref-03, ref-04, ref-05, ref-07, ref-08, ref-09", "character": "al-40"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "status", "value": "to_review", "from": "recherche automatique", "character": "al-40"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "outfit_note", "value": "varie selon l'arc", "from": "recherche automatique", "character": "al-62"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.eyes", "value": ["#614c33", "#4d3a24", "#796042"], "from": "recherche automatique, 1 image(s) sur 2 : ref-03", "character": "al-62"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.hair", "value": ["#92daaa", "#88ba70", "#ebf4eb"], "from": "recherche automatique, 2 image(s) sur 2 : ref-01, ref-03", "character": "al-62"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.skin", "value": ["#f6b67a", "#ea9d61", "#fbf3e0"], "from": "recherche automatique, 2 image(s) sur 2 : ref-01, ref-03", "character": "al-62"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "status", "value": "to_review", "from": "recherche automatique", "character": "al-62"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "outfit_note", "value": "varie selon l'arc", "from": "recherche automatique", "character": "al-723"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.eyes", "value": ["#a0907d", "#332f2b", "#bca793"], "from": "recherche automatique, 1 image(s) sur 1 : ref-07", "character": "al-723"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.hair", "value": ["#fc9050", "#dc6e3b", "#f7dfba"], "from": "recherche automatique, 6 image(s) sur 6 : ref-02, ref-03, ref-04, ref-05, ref-06, ref-07", "character": "al-723"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.skin", "value": ["#fcdfc2", "#f7c19f", "#fcf3e4"], "from": "recherche automatique, 6 image(s) sur 6 : ref-02, ref-03, ref-04, ref-05, ref-06, ref-07", "character": "al-723"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "status", "value": "to_review", "from": "recherche automatique", "character": "al-723"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.hair", "value": ["#2d3baa", null, "#185bb1"], "from": "recherche automatique, 1 image(s) sur 1 : ref-01", "character": "al-724"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.skin", "value": ["#f4d37e", "#ebb865", "#f5f0ed"], "from": "recherche automatique, 1 image(s) sur 1 : ref-01", "character": "al-724"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "status", "value": "to_review", "from": "recherche automatique", "character": "al-724"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "outfit_note", "value": "varie selon l'arc", "from": "recherche automatique", "character": "al-305"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.eyes", "value": ["#917868", "#735d54", "#c8b2a5"], "from": "recherche automatique, 2 image(s) sur 3 : ref-01, ref-04", "character": "al-305"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.hair", "value": ["#deae53", "#c5933e", "#f5d889"], "from": "recherche automatique, 5 image(s) sur 5 : ref-02, ref-03, ref-04, ref-05, ref-06", "character": "al-305"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.skin", "value": ["#f8d5b5", "#f6bb9a", "#fbefe1"], "from": "recherche automatique, 5 image(s) sur 5 : ref-02, ref-03, ref-04, ref-05, ref-06", "character": "al-305"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "status", "value": "automatic", "from": "recherche automatique", "character": "al-305"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "outfit_note", "value": "varie selon l'arc", "from": "recherche automatique", "character": "al-61"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.eyes", "value": ["#100e0d", "#020202", "#02454c"], "from": "recherche automatique, 1 image(s) sur 1 : ref-01", "character": "al-61"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.hair", "value": ["#161720", "#0a0b0f", "#282c3f"], "from": "recherche automatique, 1 image(s) sur 1 : ref-01", "character": "al-61"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.skin", "value": ["#f0cbb0", "#d8a48f", null], "from": "recherche automatique, 1 image(s) sur 1 : ref-01", "character": "al-61"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "status", "value": "to_review", "from": "recherche automatique", "character": "al-61"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "outfit_note", "value": "varie selon l'arc", "from": "recherche automatique", "character": "al-309"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.hair", "value": ["#fa6180", "#ca4262", "#fefefe"], "from": "recherche automatique, 1 image(s) sur 1 : ref-01", "character": "al-309"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.skin", "value": ["#fdd792", "#c48566", null], "from": "recherche automatique, 1 image(s) sur 1 : ref-01", "character": "al-309"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "status", "value": "to_review", "from": "recherche automatique", "character": "al-309"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "outfit_note", "value": "varie selon l'arc", "from": "recherche automatique", "character": "al-64"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.eyes", "value": ["#231d1c", null, "#a29895"], "from": "recherche automatique, 2 image(s) sur 2 : ref-01, ref-02", "character": "al-64"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.hair", "value": ["#589dc9", "#4788af", "#6db4da"], "from": "recherche automatique, 2 image(s) sur 2 : ref-02, ref-03", "character": "al-64"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "parts.skin", "value": ["#f5caa3", "#e6ac86", "#f9e4cc"], "from": "recherche automatique, 2 image(s) sur 3 : ref-01, ref-03", "character": "al-64"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "status", "value": "to_review", "from": "recherche automatique", "character": "al-64"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "outfit_note", "value": "varie selon l'arc", "from": "recherche automatique", "character": "al-5627"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "status", "value": "to_review", "from": "recherche automatique", "character": "al-5627"}
+{"date": "2026-11-23T16:18:33+00:00", "what": "status", "value": "to_review", "from": "recherche automatique", "character": "al-18938"}

@@ -1,7 +1,8 @@
 # Colorisation fidèle : la logique
 
-État : proposition du 2026-11-22, questions répondues le même jour (D10 à D13), en attente de feu vert. Rien de ce
-document n'est encore codé.
+État : proposition du 2026-11-22, questions répondues le même jour (D10 à D13), feu vert donné (D16). La recherche
+de la fiche (§ 3 et 4) est codée dans `tools/colorization-server/color_sheet.py` (tâche 2, D30 à D34) ; le reste ne
+l'est pas encore.
 Ce qui existe aujourd'hui est décrit dans `CLAUDE.md` (moteurs `guided`, `flux`, `mc2`).
 
 ## 1. Le défaut à corriger
@@ -112,7 +113,7 @@ Tout se fait par des bases publiques, sans compte et sans clé. Vérifié en dir
 
 | Besoin | Source | Ce qu'elle donne | Limite constatée |
 |---|---|---|---|
-| Reconnaître la série | Identifiant de suivi du téléphone s'il existe ; sinon MangaBaka et AniList (recherche par titre) ; MangaDex (ses `links` donnent les identifiants AniList, MyAnimeList, MangaUpdates, Kitsu) | Une clé sûre pour la série, et l'existence ou non d'un anime | Titres ambigus, hors-séries, éditions coloriées par des amateurs : le PC exige le même identifiant dans deux sources et compare l'auteur |
+| Reconnaître la série | Identifiant de suivi du téléphone s'il existe ; sinon MangaBaka (`api.mangabaka.org` depuis novembre 2026, l'ancienne adresse `api.mangabaka.dev` ne répond plus) et AniList (recherche par titre) ; MangaDex (ses `links` donnent les identifiants AniList, MyAnimeList, MangaUpdates, Kitsu) | Une clé sûre pour la série, et l'existence ou non d'un anime | Titres ambigus, hors-séries, éditions coloriées par des amateurs : le PC exige le même identifiant dans deux sources et compare l'auteur |
 | Liste des personnages | AniList | Nom, nom japonais, surnoms, rôle (principal, secondaire), une image | 30 requêtes par minute |
 | Images officielles en couleur | 1. pages couleur du manga, envoyées par le téléphone · 2. couvertures de tomes en japonais (MangaDex) · 3. image du personnage (AniList) | Dessins de l'auteur, puis de l'anime | Série à l'anime installé (Frieren) : 10 images de personnage sur 10 en couleur. Série récente (Kagurabachi) : 7 sur 10 sans aucune couleur. D'où le passage par les couvertures de tomes en japonais : 16 pour Frieren, 12 pour Kagurabachi, 37 pour Vagabond (recompté le 2026-11-22) |
 | Mots de contrôle | Étiquettes Danbooru du personnage (cheveux, yeux, vêtements, avec leur fréquence), encadré du wiki Fandom | « cheveux blancs 53 %, gris 35 % », « hair = Silver » | Étiquettes mêlées à celles des personnages dessinés à côté ; encadré absent de beaucoup de wikis ; mentions « (Manga) / (Anime) » à lire |
@@ -226,7 +227,9 @@ Relevées sur leur page le 2026-11-22. Aucune n'est intégrée.
 |---|---|---|---|---|
 | [Magi v2](https://huggingface.co/ragavsachdeva/magiv2) | Cases, textes, personnages nommés à partir d'une banque d'exemples, sur un chapitre entier | Usage personnel, recherche, non commercial (fiche du modèle) ; pas de fichier de licence dans le dépôt | 2 Go | À essayer |
 | [deepghs/manga109_yolo](https://huggingface.co/deepghs/manga109_yolo) | Visages, corps, cases, textes | Non indiquée | Petit | À essayer |
-| [See-through, découpage du corps](https://huggingface.co/24yearsold/l2d_sam_iter2) | 19 parties : cheveux, visage, yeux, haut, bas… | Apache-2.0 | 1,3 Go | À essayer ; jamais mesuré sur du noir et blanc |
+| [See-through, découpage du corps](https://huggingface.co/24yearsold/l2d_sam_iter2) | 19 parties : cheveux, visage, yeux, haut, bas… | Apache-2.0 | 1,3 Go | Employé par la recherche de la fiche (tâche 2, D32) sur des images en couleur : environ 12 s par image sur le processeur ; jamais mesuré sur du noir et blanc |
+| [deepghs : détection des personnages et des têtes](https://huggingface.co/deepghs/anime_head_detection) | Cadres des personnages et des têtes sur une image en couleur | MIT | 2 × 45 Mo | Employé par la recherche de la fiche (D31) |
+| [deepghs : CCIP, grand modèle](https://huggingface.co/deepghs/ccip_onnx) | Dit si deux images montrent le même personnage | OpenRAIL | 384 Mo | Employé par la recherche de la fiche (D31) ; le petit modèle confond des personnages de One Piece |
 | [Complément klein 9B « by reference »](https://huggingface.co/thedeoxen/FLUX.2-klein-9B-manga-colorization-by-reference-LORA) | Page + planche de référence | Complément Apache-2.0 ; modèle de base non commercial | 158 Mo + environ 11 Go | À essayer |
 | [FLUX 3 Image Klein](https://huggingface.co/black-forest-labs/flux-3-image-klein) | Retouche avec jusqu'à 10 références | Non commerciale | Environ 7 Go | À essayer |
 | [1Dreamer666/MangaShot](https://github.com/1Dreamer666/MangaShot) | Outil Windows qui emploie klein 9B + le complément, réglé pour 6 Go | AGPL-3.0 : s'en inspirer, ne pas reprendre le code | — | Référence de réglages |

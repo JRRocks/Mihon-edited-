@@ -1,0 +1,8 @@
+# Trials keep measured colors, URLs and crop boxes only: no picture of the work (manga pages, covers, art)
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.avif
+*.bmp
