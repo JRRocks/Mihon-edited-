@@ -27,6 +27,9 @@ Engines:
         inside the original line art. Line art, screentones and text stay the original ones.
 
 Run with `uv run --script colorization_server.py` (start-server.bat does it). Models are downloaded on first run.
+
+--capture keeps every page the app sends, byte for byte, to build test sets: <dir>/<series>/<server start>/page-NNN
+in arrival order, plus pages.jsonl (one line per page: size, time, series, SHA-1). Colorization works as usual.
 """
 import argparse
 import atexit
@@ -264,6 +267,43 @@ def color_layer(gray, rgb):
     return np.maximum(filled, 0)
 
 
+class PageCapture:
+    """Keeps the pages the app sends, as received, so that a real chapter can be replayed in tests."""
+
+    def __init__(self, root):
+        self.root = Path(root)
+        self.started = time.strftime("%Y-%m-%d_%H-%M-%S")
+        self.lock = threading.Lock()
+        self.counts = {}
+
+    @staticmethod
+    def folder_name(title):
+        name = "".join("_" if c in '<>:"/\\|?*' or ord(c) < 32 else c for c in title or "").strip(" .")
+        return name[:80] or "untitled"
+
+    def save(self, body, image, title):
+        folder = self.root / self.folder_name(title) / self.started
+        extension = ".png" if body.startswith(b"\x89PNG") else ".jpg"
+        with self.lock:
+            index = self.counts.get(folder, 0) + 1
+            self.counts[folder] = index
+            folder.mkdir(parents=True, exist_ok=True)
+            name = f"page-{index:03d}{extension}"
+            (folder / name).write_bytes(body)
+            entry = {
+                "index": index,
+                "file": name,
+                "received": time.strftime("%Y-%m-%dT%H:%M:%S"),
+                "width": int(image.shape[1]),
+                "height": int(image.shape[0]),
+                "series": title,
+                "sha1": hashlib.sha1(body).hexdigest(),
+            }
+            with open(folder / "pages.jsonl", "a", encoding="utf-8") as log:
+                log.write(json.dumps(entry, ensure_ascii=False) + "\n")
+        return folder / name
+
+
 def main():
     default_cache = Path.home() / ".cache" / "mihon-colorization"
     parser = argparse.ArgumentParser(description="Colorization server for Mihon (edited)")
@@ -277,7 +317,12 @@ def main():
     parser.add_argument("--llm-port", type=int, default=8767, help="local port of llama.cpp (--director)")
     parser.add_argument("--cache", type=Path, default=default_cache, help="where models are downloaded")
     parser.add_argument("--download-only", action="store_true", help="download the models and exit")
+    parser.add_argument("--capture", nargs="?", type=Path, metavar="DIR",
+                        const=Path.home() / "Documents" / "Mihon colorisation" / "essais",
+                        help="also keep every received page, as received, to build test sets "
+                             "(alone: Documents\\Mihon colorisation\\essais)")
     args = parser.parse_args()
+    capture = PageCapture(args.capture) if args.capture else None
 
     if args.download_only:
         if args.engine == "flux":
@@ -322,12 +367,14 @@ def main():
             image = cv2.imdecode(np.frombuffer(body, np.uint8), cv2.IMREAD_COLOR)
             if image is None:
                 return self.respond(400, "text/plain", b"Unsupported image format")
+            title = guided.series_title(self.headers.get("X-Series-Title"))
+            if capture:
+                print(f"Kept {capture.save(body, image, title).name} ({title or 'no title'})", flush=True)
             start = time.time()
             try:
                 # The model already uses the whole CPU or GPU: one page at a time
                 with lock:
                     if args.engine == "guided":
-                        title = guided.series_title(self.headers.get("X-Series-Title"))
                         rgb = engine.colorize(to_gray(image), title)
                     else:
                         rgb = engine.colorize(to_gray(image))
@@ -341,6 +388,8 @@ def main():
             pass
 
     server = ThreadingHTTPServer(("0.0.0.0", args.port), Handler)
+    if capture:
+        print(f"Received pages are kept in {capture.root}", flush=True)
     print(f"Colorization server ready ({args.engine}). In Mihon, use one of:")
     try:
         addresses = {info[4][0] for info in socket.getaddrinfo(socket.gethostname(), None, socket.AF_INET)}

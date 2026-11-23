@@ -2,6 +2,40 @@
 
 Les entrées les plus récentes en haut. On ne réécrit pas une entrée : une erreur se corrige par une entrée nouvelle.
 
+## 2026-11-23 · Colorisation fidèle : travail sur GitHub, session cloud lancée, capture des pages prête
+
+- Branche et commit : `colorisation` (créée le 2026-11-22 depuis `main` @ `d001e6f21`), poussée sur GitHub.
+- Objectif : lancer les tests demandés « sur session cloud en nested session » (D16), série One Piece (D17).
+- Réalisé :
+  - tout le travail de colorisation (application, serveur, documents) commité sur la branche `colorisation` et
+    poussé ; `main` n'a pas bougé ;
+  - le miroir Drive est décrit dans `CLAUDE.local.md`, exclu de git ; `CLAUDE.md` part sur GitHub sans chemin privé
+    (D21) ;
+  - session cloud « Fiche couleurs One Piece : recherche automatique » demandée le 2026-11-22, démarrée par
+    l'utilisateur ; elle travaille sur sa branche `claude/magical-mendel-3nv2ua` (tâche 2) ;
+  - tâche 1 : le serveur garde les pages reçues avec l'option `--capture` (dossier
+    `Documents\Mihon colorisation\essais\<série>\<démarrage>\`, pages dans l'ordre d'arrivée, `pages.jsonl`) ; le
+    serveur du PC tourne en mode capture, moteur `guided`, dans une fenêtre réduite.
+- Décisions : D16 à D18 (utilisateur), D19 à D21 (développeur).
+- Vérifications :
+  - contrôle « rien de privé » (script du skill `depot-public`) sur le commit puis sur tout l'écart avec `origin/main` :
+    rien à signaler ; identité des commits `noreply` ;
+  - branche `colorisation` sur GitHub au même commit que le PC (`f7c68ff79`) ;
+  - documentation de Claude Code lue : session cloud de 4 processeurs, 16 Go, 30 Go de disque, aucune carte graphique
+    annoncée ; accès réseau « Limited » par défaut, qui bloque AniList, MangaDex, MangaBaka, Danbooru, Fandom et
+    Hugging Face ;
+  - capture essayée sur un serveur à part (moteur `mc2`, port 8799) : trois pages envoyées, gardées à l'octet près
+    dans l'ordre, dossier `untitled` sans titre, réponse coloriée inchangée ; puis une page sur le vrai serveur
+    (`guided`, 1,4 s), effacée ensuite.
+- Non vérifié sur téléphone : l'envoi d'un vrai chapitre de One Piece vers le serveur en mode capture.
+- Problèmes et dette :
+  - au 2026-11-23 au matin, la session cloud est inactive et sa branche n'a aucun commit propre : elle attend
+    probablement l'ouverture des domaines ; un message de relance lui a été envoyé, sans réponse possible vers ce PC ;
+  - le serveur en mode capture s'arrête si la fenêtre est fermée ou le PC redémarré : le relancer avec
+    `start-server.bat --capture`.
+- Prochaine étape : l'utilisateur ouvre les domaines de l'environnement cloud, et lance depuis le téléphone le
+  coloriage d'un chapitre de One Piece (Qualité : « Détaillée », 1024 px) ; ensuite tâche 3 sur le PC.
+
 ## 2026-11-22 · Colorisation fidèle : quatre réponses, plan réordonné
 
 - Branche et commit : `main`, aucun commit.
