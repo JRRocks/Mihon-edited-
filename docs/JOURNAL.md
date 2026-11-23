@@ -32,7 +32,9 @@ Les entrées les plus récentes en haut. On ne réécrit pas une entrée : une e
   - au 2026-11-23 au matin, la session cloud est inactive et sa branche n'a aucun commit propre : elle attend
     probablement l'ouverture des domaines ; un message de relance lui a été envoyé, sans réponse possible vers ce PC ;
   - le serveur en mode capture s'arrête si la fenêtre est fermée ou le PC redémarré : le relancer avec
-    `start-server.bat --capture`.
+    `start-server.bat --capture` ;
+  - miroir Drive non fait le 2026-11-23 : le lecteur G: n'est pas monté (Google Drive n'est pas lancé sur le PC).
+    À refaire à la prochaine session ; GitHub a tout, sauf `CLAUDE.local.md`, qui n'existe que sur le PC.
 - Prochaine étape : l'utilisateur ouvre les domaines de l'environnement cloud, et lance depuis le téléphone le
   coloriage d'un chapitre de One Piece (Qualité : « Détaillée », 1024 px) ; ensuite tâche 3 sur le PC.
 
