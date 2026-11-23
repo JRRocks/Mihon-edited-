@@ -3,8 +3,10 @@
 Models (ONNX, run on the CPU), all from https://huggingface.co/deepghs, pinned to a commit:
 - anime_person_detection, person_detect_v1.3_s (YOLOv8, MIT): one box per character;
 - anime_head_detection, head_detect_v2.0_s (YOLOv8, MIT): heads, to keep only crops that show a single character;
-- ccip_onnx, ccip-caformer-24-randaug-pruned (CCIP, OpenRAIL): a "difference" between two images of characters,
-  below 0.178 when they show the same character (threshold from the model's metrics.json).
+- ccip_onnx, ccip-caformer_b36-24 (CCIP, OpenRAIL, 384 MB): a "difference" between two images of characters, below
+  0.213 when they show the same character (best F1 score, 0.94, in the model card). The smaller default model of
+  dghs-imgutils (ccip-caformer-24-randaug-pruned, F1 0.92) confused post-timeskip Zoro with Usopp on One Piece covers;
+  this one made no such confusion on the same 64 crops (see docs/DECISIONS.md, D31).
 Pre- and post-processing follow the reference implementation, dghs-imgutils 0.19 (MIT).
 """
 import ast
@@ -26,15 +28,24 @@ HEAD_MODEL = (
     f"{HF}/deepghs/anime_head_detection/resolve/06604feee81983792a57c21081e539c0ae229833/head_detect_v2.0_s/model.onnx",
     "6679f9b71192298bbf174d82e9e5581c3237b0c3dc67deace7cdbf686b070a00",
 )
-CCIP_REVISION = f"{HF}/deepghs/ccip_onnx/resolve/eb2acdd29af1703388d3d0c04221add322bc9110/ccip-caformer-24-randaug-pruned"
-CCIP_FEATURES = ("deepghs-ccip-caformer-24-randaug-pruned-feat.onnx", f"{CCIP_REVISION}/model_feat.onnx",
-                 "4ea118d16496274f4f6e08d3afc768cc592389e8f7f32f8732ce2215c228ac5f")
-CCIP_METRICS = ("deepghs-ccip-caformer-24-randaug-pruned-metrics.onnx", f"{CCIP_REVISION}/model_metrics.onnx",
-                "7e4646fdfbe369ad485b227ec47ac4092c98b8deef3af44e19fdbd8ba7bc25c1")
-# From the models' threshold.json / metrics.json at the same commits (best F1 score)
+CCIP_REVISION = f"{HF}/deepghs/ccip_onnx/resolve/eb2acdd29af1703388d3d0c04221add322bc9110/ccip-caformer_b36-24"
+CCIP_FEATURES = ("deepghs-ccip-caformer_b36-24-feat.onnx", f"{CCIP_REVISION}/model_feat.onnx",
+                 "c1e7333a55c2ad9e03cd340c635e96c9c1d86f0836fa7eae65720e7c9c94ee51")
+CCIP_METRICS = ("deepghs-ccip-caformer_b36-24-metrics.onnx", f"{CCIP_REVISION}/model_metrics.onnx",
+                "816f291e385e854896276ff283dc83eac4966e5f51ab10260fee50de3ca9b8e3")
+# From the models' threshold.json at the same commits, and the CCIP model card (best F1 score)
 PERSON_THRESHOLD = 0.324
 HEAD_THRESHOLD = 0.413
-CCIP_SAME = 0.17847511429108218
+CCIP_SAME = 0.213231
+# Matching a crop to a character (spec, section 5, "threshold and gap"): a crop is that character when its difference
+# to the official AniList picture is under REF_MATCH and ahead of the second best by MARGIN; a crop very close (LINK)
+# to such a crop is that character too, if it isn't far from the official picture. Set on One Piece covers: on 64
+# hand-labeled single-character crops, 0.14 gave 21 right and no crew member taken for another; on the 193 heads of
+# the full run, 0.14 also let in a blue dragon (taken for Jinbe) and Whitebeard (taken for Usopp) at 0.136 and 0.139,
+# and 0.10 links brought a green-haired Vinsmoke to Zoro at 0.085: hence 0.12 and 0.08.
+REF_MATCH = 0.12
+MARGIN = 0.05
+LINK = 0.08
 # CLIP normalization, used by CCIP
 CCIP_MEAN = np.array([0.48145466, 0.4578275, 0.40821073], np.float32)
 CCIP_STD = np.array([0.26862954, 0.26130258, 0.27577711], np.float32)
@@ -193,3 +204,94 @@ def single_character_crops(persons, heads, min_height):
         crops.append({"box": [int(v) for v in p[:4]], "score": round(float(p[4]), 3),
                       "head": [int(v) for v in inside[0][:4]]})
     return crops
+
+
+def around(box, shape, left, top, right, bottom):
+    """A box grown by the given multiples of the box's larger side, clipped to the image."""
+    x0, y0, x1, y1 = box[:4]
+    s = max(x1 - x0, y1 - y0)
+    h, w = shape[:2]
+    return [int(max(0, x0 - left * s)), int(max(0, y0 - top * s)), int(min(w, x1 + right * s)),
+            int(min(h, y1 + bottom * s))]
+
+
+def identity_box(head, shape):
+    """Head and shoulders, the framing of the AniList pictures, for matching."""
+    return around(head, shape, 0.3, 0.3, 0.3, 0.4)
+
+
+def parse_box(instance, shape):
+    """What the parts model sees: the whole single-character box, or head and shoulders (the framing of the AniList
+    pictures, which the model reads best)."""
+    if instance.get("body"):
+        return around(instance["body"], shape, 0.03, 0.03, 0.03, 0.03)
+    return identity_box(instance["head"], shape)
+
+
+def cover_instances(persons, heads, shape, min_head=0.035):
+    """Every character drawn on a cover: one per detected head big enough to measure (min_head of the page height).
+
+    Crowded covers rarely isolate a whole character, but heads are separate: hair, eyes and skin are measured around
+    the head; the body (for the outfit) is added only when a person box holds this head and no other.
+    """
+    instances = []
+    for head in heads:
+        if max(head[2] - head[0], head[3] - head[1]) < min_head * shape[0]:
+            continue
+        body = None
+        for p in sorted(persons, key=lambda p: (p[2] - p[0]) * (p[3] - p[1])):
+            if inside_fraction(head, p) > 0.6:
+                if sum(inside_fraction(h, p) > 0.6 for h in heads) == 1:
+                    body = [int(v) for v in p[:4]]
+                break
+        instances.append({"head": [int(v) for v in head[:4]], "head_score": round(float(head[4]), 3),
+                          "body": body})
+    return instances
+
+
+def assign(ref_diff, crop_diff, images, ref_match=REF_MATCH, margin=MARGIN, link=LINK, same=CCIP_SAME):
+    """Which character each crop shows, or None. Pure function.
+
+    ref_diff: (crops, characters) differences to each character's official picture; crop_diff: (crops, crops)
+    differences between crops; images: the image each crop comes from. A crop is a character when it matches the
+    official picture under `ref_match` with a gap of `margin` over the second best (seed), or when it is within `link`
+    of a seed of that character with the same gap over the other characters' seeds, and under `same` from the official
+    picture. One image counts once per character: the best crop is kept. Returns [(character index or None, how)].
+    """
+    import numpy as np
+
+    ref_diff = np.asarray(ref_diff)
+    n, k = ref_diff.shape
+    result = [(None, None)] * n
+    for i in range(n):
+        order = np.argsort(ref_diff[i])
+        best = int(order[0])
+        second = ref_diff[i, order[1]] if k > 1 else np.inf
+        if ref_diff[i, best] < ref_match and second - ref_diff[i, best] >= margin:
+            result[i] = (best, {"by": "official", "difference": round(float(ref_diff[i, best]), 3),
+                                "gap": round(float(second - ref_diff[i, best]), 3)})
+    seeds = [(i, c) for i, (c, _) in enumerate(result) if c is not None]
+    for j in range(n):
+        if result[j][0] is not None or not seeds:
+            continue
+        nearest = {}
+        for i, c in seeds:
+            d = float(crop_diff[j][i])
+            if d < nearest.get(c, (np.inf,))[0]:
+                nearest[c] = (d, i)
+        ranked = sorted(nearest.items(), key=lambda kv: kv[1][0])
+        c, (d, i) = ranked[0]
+        gap = ranked[1][1][0] - d if len(ranked) > 1 else np.inf
+        if d < link and gap >= margin and ref_diff[j, c] < same:
+            result[j] = (c, {"by": "crop", "crop": i, "difference": round(d, 3),
+                             "official": round(float(ref_diff[j, c]), 3)})
+    # One image counts once per character
+    best_of = {}
+    for i, (c, how) in enumerate(result):
+        if c is None:
+            continue
+        key = (images[i], c)
+        if key not in best_of or ref_diff[i, c] < ref_diff[best_of[key], c]:
+            best_of[key] = i
+    keep = set(best_of.values())
+    return [r if i in keep else (None, None) for i, r in enumerate(result)]

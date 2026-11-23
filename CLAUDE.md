@@ -47,6 +47,11 @@ in `gradle/libs.versions.toml` + `gradle/mihon.versions.toml`.
   in `X-Series-Title`. Other engines: `--engine flux` (FLUX.2 klein, NVIDIA), `--engine mc2` (CPU). DirectML
   crashes if the mc-v2 session is created before the CLIP ones. Models are cached outside the repo, in
   `%USERPROFILE%\.cache\mihon-colorization`.
+- `tools/colorization-server/color_sheet.py` (`color-sheet.bat`) — builds a series' color sheet (task 2 of
+  `docs/PLAN.md`): AniList/MangaBaka/MangaDex identity, MAIN characters, Japanese volume covers, characters found by
+  deepghs head detection + CCIP, parts by See-through, colors measured in OKLab, Danbooru/Fandom control words, D14
+  doubt rules; package `colorsheet/`, pure-part tests with `uv run --script tests/run_tests.py`. Trial pages live in
+  `essais/` (JSON, SVG swatches and image URLs only, never images).
 
 ## Project memory
 

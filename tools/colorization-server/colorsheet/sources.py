@@ -175,22 +175,28 @@ def danbooru_series_tag(http, identity):
 
 
 def danbooru_character(http, character, series_tag):
-    """The character's tag: a wiki page that names the character (Japanese name first), checked against the series.
+    """The character's tag: a wiki page that names the character (Japanese name first), or the romanized name written
+    as a tag ("nico_robin", "monkey_d._luffy", "franky_(one_piece)"), checked against the series.
 
     Homonyms are frequent ("Nami" is also a League of Legends character): a candidate is kept only when the series'
     copyright tag comes with it on at least half of its pictures.
     """
-    names = [character["name"].get("native")] + (character["name"].get("alternative") or [])
-    names += [character["name"].get("full")]
+    n = character["name"]
     candidates = []
-    for name in filter(None, names[:4]):
+    for name in filter(None, [n.get("native")] + (n.get("alternative") or [])[:2]):
         for title in danbooru_wiki_titles(http, name):
             if title not in candidates:
                 candidates.append(title)
         if candidates:
             break
-    if not candidates:
-        return None
+    def as_tag(*words):
+        return re.sub(r"\s+", "_", " ".join(filter(None, words)).strip().lower())
+
+    guesses = [as_tag(n.get("last"), n.get("middle"), n.get("first")), as_tag(n.get("first"), n.get("last")),
+               as_tag(n.get("full"))]
+    if series_tag:
+        guesses += [f"{as_tag(n.get('first'))}_({series_tag})", f"{as_tag(n.get('full'))}_({series_tag})"]
+    candidates += [g for g in dict.fromkeys(guesses) if g and g not in candidates]
     tags = danbooru_tags(http, candidates)
     for name in candidates:
         tag = tags.get(name)
@@ -258,37 +264,29 @@ def plain_text(wikitext):
 
 
 def appearance_words(text):
-    """Color words written just before "hair", "eyes" and "skin" (within three words) in a description."""
+    """Color words written just before "hair", "eyes" and "skin" (within three words of the same sentence)."""
     words = {"hair": Counter(), "eyes": Counter(), "skin": Counter()}
-    tokens = re.findall(r"[a-z]+(?:-[a-z]+)?", text.lower())
-    for i, token in enumerate(tokens):
-        part = {"hair": "hair", "eyes": "eyes", "eye": "eyes", "skin": "skin", "skinned": "skin"}.get(token)
-        if not part:
-            continue
-        for word in tokens[max(0, i - 3):i]:
-            for piece in word.split("-"):
-                # "light", "dark", "pale", "fair" and "tan" describe a skin; before "hair" they only shade a color
-                if piece in _WIKI_COLORS and (part == "skin" or piece not in _SKIN_ONLY):
-                    words[part][_WIKI_NORMAL.get(piece, piece)] += 1
+    for sentence in re.split(r"[.!?;:()]", text.lower()):
+        tokens = re.findall(r"[a-z]+(?:-[a-z]+)?", sentence)
+        for i, token in enumerate(tokens):
+            part = {"hair": "hair", "eyes": "eyes", "eye": "eyes", "skin": "skin", "skinned": "skin"}.get(token)
+            if not part:
+                continue
+            for word in tokens[max(0, i - 3):i]:
+                for piece in word.split("-"):
+                    # "light", "dark", "pale", "fair" and "tan" describe a skin; before "hair" they only shade a color
+                    if piece in _WIKI_COLORS and (part == "skin" or piece not in _SKIN_ONLY):
+                        words[part][_WIKI_NORMAL.get(piece, piece)] += 1
     return {part: c.most_common() for part, c in words.items()}
 
 
 def wiki_words(http, host, page):
-    """Color words of the "Appearance" section of a character's wiki page (and its sub-sections)."""
+    """Color words of the "Appearance" section of a character's wiki page (sub-sections come with it)."""
     sections = wiki_api(http, host, action="parse", page=page, prop="sections", redirects=1)
     sections = sections.get("parse", {}).get("sections", [])
-    start = next((s for s in sections if s["line"].strip().lower() == "appearance"), None)
+    start = next((s for s in sections if s["line"].strip().lower() == "appearance" and str(s["index"]).isdigit()),
+                 None)
     if not start:
         return None
-    chosen = [start]
-    for s in sections[sections.index(start) + 1:]:
-        if int(s["toclevel"]) <= int(start["toclevel"]):
-            break
-        chosen.append(s)
-    text = ""
-    for s in chosen:
-        if not str(s["index"]).isdigit():
-            continue
-        parsed = wiki_api(http, host, action="parse", page=page, prop="wikitext", section=s["index"], redirects=1)
-        text += " " + parsed.get("parse", {}).get("wikitext", {}).get("*", "")
-    return appearance_words(plain_text(text))
+    parsed = wiki_api(http, host, action="parse", page=page, prop="wikitext", section=start["index"], redirects=1)
+    return appearance_words(plain_text(parsed.get("parse", {}).get("wikitext", {}).get("*", "")))

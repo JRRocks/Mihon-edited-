@@ -16,8 +16,12 @@ OUTFIT_PARTS = ("top", "bottom")
 KIND_RANK = {"user": 0, "manga_color_page": 1, "volume_cover": 2, "anime": 3}
 # Two measures of the same part closer than this (OKLab) are the same color
 SAME_COLOR = 0.08
+# Tones of several images closer than this form one group (printing and lighting differ between volumes)
+GROUP_RADIUS = 0.12
 # An outfit is kept when its color holds at least this share of the images showing the part
 OUTFIT_DOMINANCE = 0.6
+# Danbooru color tags under this share of the character's pictures are noise
+DANBOORU_FLOOR = 0.15
 
 FR_PART = {"hair": "cheveux", "eyes": "yeux", "skin": "peau", "top": "haut", "bottom": "bas"}
 FR_COLOR = {"black": "noir", "grey": "gris", "white": "blanc", "brown": "brun", "blonde": "blond", "yellow": "jaune",
@@ -51,9 +55,10 @@ def words_agree(part, a, b):
 
 
 def colors_agree(part, x, y):
-    """Same color for the sheet: close in OKLab, or the same (or neighboring) name and not far apart."""
+    """Same color for the sheet: close in OKLab, or the same (or neighboring) name and not too far apart (covers are
+    printed and lit differently from one volume to the next)."""
     d = measure.delta_e(x, y)
-    return d < SAME_COLOR or (d < 0.15 and words_agree(part, word_of(part, x), word_of(part, y)))
+    return d < SAME_COLOR or (d < 0.20 and words_agree(part, word_of(part, x), word_of(part, y)))
 
 
 def confidence(agreeing, total):
@@ -67,7 +72,7 @@ def _tone(values):
 
 
 def _entry(part, members, total, kind):
-    """A sheet entry from the observations that agree (median of each tone)."""
+    """A sheet entry from the observations that agree, one per image (median of each tone)."""
     value = np.median(np.asarray([o["lab"] for o in members]), axis=0)
     closest = min(members, key=lambda o: measure.delta_e(o["lab"], value))
     entry = {"base": measure.oklab_to_hex(value)}
@@ -82,11 +87,60 @@ def _entry(part, members, total, kind):
     return entry, value
 
 
-def settle_part(part, observations):
+def _images(observations):
+    return len({o["ref"] for o in observations})
+
+
+def _groups(observations):
+    """Groups of close tones over the images, the most images first; an image counts once in a group.
+
+    An image may bring several candidate tones (hair and hat): each is weighted by its share of the part.
+    """
+    if not observations:
+        return []
+    raw = measure.densest_groups([o["lab"] for o in observations], [o.get("weight", 1.0) for o in observations],
+                                 radius=GROUP_RADIUS, max_groups=5)
+    groups = []
+    for g in raw:
+        best = {}
+        for i in g["members"]:
+            o = observations[i]
+            if o["ref"] not in best or o.get("weight", 1.0) > best[o["ref"]].get("weight", 1.0):
+                best[o["ref"]] = o
+        members = list(best.values())
+        groups.append({"members": members, "weight": sum(o.get("weight", 1.0) for o in members),
+                       "value": np.median(np.asarray([o["lab"] for o in members]), axis=0)})
+    groups.sort(key=lambda g: (-len(g["members"]), -g["weight"]))
+    return groups
+
+
+def _choose(part, groups, words, name, doubts):
+    """The densest group, unless it contradicts the control words and the next one agrees with them: the area of a
+    part sometimes holds something else (a hat over the hair, the background around it)."""
+    chosen = groups[0]
+    if len(groups) < 2:
+        return chosen
+    first, second = word_of(part, groups[0]["value"]), word_of(part, groups[1]["value"])
+    if words and not agrees_with_words(part, first, words) and agrees_with_words(part, second, words):
+        doubts.append(f"{name} : deux couleurs dans la zone mesurée ({fr(first)} sur {len(groups[0]['members'])} "
+                      f"image(s), {fr(second)} sur {len(groups[1]['members'])}), sans doute un chapeau ou le fond ; "
+                      f"{fr(second)} retenu parce que les mots de contrôle le confirment.")
+        return groups[1]
+    if (len(groups[1]["members"]) >= max(2, 0.6 * len(groups[0]["members"]))
+            and not words_agree(part, first, second)):
+        other = groups[1]
+        chosen = dict(chosen, variant={"base": measure.oklab_to_hex(other["value"]), "images": len(other["members"])})
+        doubts.append(f"{name} : deux couleurs stables ({fr(first)} sur {len(groups[0]['members'])} images, "
+                      f"{fr(second)} sur {len(other['members'])}).")
+    return chosen
+
+
+def settle_part(part, observations, words=None):
     """One locked part (hair, eyes, skin) from its measures on every image. Returns (entry or None, doubts).
 
-    Covers come first (D3). Their densest group needs two images; a single cover or the AniList picture alone gives a
-    color resting on one image, which is a doubt. Covers and the AniList picture that disagree are a doubt too.
+    Covers come first (D3): their densest group needs two images. Otherwise every image counts; a color resting on
+    a single image is a doubt, and so are covers and the AniList picture that disagree. `words` (control words) only
+    break a tie between the two densest groups, and that choice is itself reported as a doubt.
     """
     name = FR_PART[part].capitalize()
     if not observations:
@@ -94,53 +148,72 @@ def settle_part(part, observations):
     doubts = []
     covers = [o for o in observations if o["kind"] == "volume_cover"]
     anime = [o for o in observations if o["kind"] == "anime"]
-    if len(covers) >= 2:
-        groups = measure.densest_groups([o["lab"] for o in covers], radius=SAME_COLOR)
-        top = groups[0]
-        if len(top["members"]) >= 2:
-            members = [covers[i] for i in top["members"]]
-            entry, value = _entry(part, members, len(covers), "volume_cover")
-            if len(groups) > 1 and len(groups[1]["members"]) >= max(2, 0.6 * len(top["members"])):
-                other = np.median(np.asarray([covers[i]["lab"] for i in groups[1]["members"]]), axis=0)
-                entry["variant"] = {"base": measure.oklab_to_hex(other), "images": len(groups[1]["members"])}
-                doubts.append(f"{name} : deux couleurs stables sur les couvertures ({fr(entry['word'])} sur "
-                              f"{len(top['members'])} images, {fr(word_of(part, other))} sur "
-                              f"{len(groups[1]['members'])}).")
-            for o in anime:
-                if not colors_agree(part, o["lab"], value):
+    if _images(covers) >= 2:
+        groups = [g for g in _groups(covers) if len(g["members"]) >= 2]
+        if groups:
+            chosen = _choose(part, groups, words, name, doubts)
+            entry, value = _entry(part, chosen["members"], _images(covers), "volume_cover")
+            if "variant" in chosen:
+                entry["variant"] = chosen["variant"]
+            for ref in sorted({o["ref"] for o in anime}):
+                tones = [o["lab"] for o in anime if o["ref"] == ref]
+                if not any(colors_agree(part, t, value) for t in tones):
                     doubts.append(f"{name} : les couvertures ({fr(entry['word'])}) et l'image AniList "
-                                  f"({fr(word_of(part, o['lab']))}) ne s'accordent pas.")
+                                  f"({fr(word_of(part, tones[0]))}) ne s'accordent pas.")
             return entry, doubts
-    # Fewer than two covers agree: every image counts, and the best-ranked one wins
-    groups = measure.densest_groups([o["lab"] for o in observations], radius=SAME_COLOR)
-    top = groups[0]
-    members = [observations[i] for i in top["members"]]
-    if len(members) >= 2 and all(colors_agree(part, a["lab"], b["lab"]) for a in members for b in members):
-        kind = min((o["kind"] for o in members), key=lambda k: KIND_RANK.get(k, 9))
-        entry, _ = _entry(part, members, len(observations), kind)
+    total = _images(observations)
+    groups = [g for g in _groups(observations) if len(g["members"]) >= 2]
+    if groups:
+        chosen = _choose(part, groups, words, name, doubts)
+        kind = min((o["kind"] for o in chosen["members"]), key=lambda k: KIND_RANK.get(k, 9))
+        entry, _ = _entry(part, chosen["members"], total, kind)
         return entry, doubts
-    best = min(observations, key=lambda o: KIND_RANK.get(o["kind"], 9))
-    entry, _ = _entry(part, [best], len(observations), best["kind"])
-    if len(observations) == 1:
-        doubts.append(f"{name} : la couleur ne repose que sur une image ({FR_KIND.get(best['kind'], best['kind'])}).")
+    # No two images agree: the best-ranked image, and among its tones the one the control words confirm, if any
+    ranked = sorted(observations, key=lambda o: (KIND_RANK.get(o["kind"], 9), -o.get("weight", 1.0)))
+    own = [o for o in ranked if o["ref"] == ranked[0]["ref"]]
+    confirmed = [o for o in own if words and agrees_with_words(part, word_of(part, o["lab"]), words)]
+    best = (confirmed or own)[0]
+    entry, _ = _entry(part, [best], total, best["kind"])
+    picked = " (parmi ses tons, celui que confirment les mots de contrôle)" if confirmed and best is not own[0] else ""
+    if total == 1:
+        doubts.append(f"{name} : la couleur ne repose que sur une image ({FR_KIND.get(best['kind'], best['kind'])})"
+                      f"{picked}.")
     else:
-        doubts.append(f"{name} : les {len(observations)} images ne s'accordent pas ; la couleur retenue vient "
-                      f"d'une seule ({FR_KIND.get(best['kind'], best['kind'])}).")
+        doubts.append(f"{name} : les {total} images ne s'accordent pas ; la couleur retenue vient d'une seule "
+                      f"({FR_KIND.get(best['kind'], best['kind'])}){picked}.")
     return entry, doubts
+
+
+def control_words(part, words):
+    """The control words that count: Danbooru tags frequent enough, and the wiki's words."""
+    danbooru = list((words or {}).get("danbooru") or [])
+    if danbooru:
+        # Tags of the characters drawn next to this one ride along: keep the words close to the most frequent one
+        floor = max(DANBOORU_FLOOR, 0.5 * max(f for _, f in danbooru))
+        danbooru = [(w, f) for w, f in danbooru if f >= floor]
+    wiki = list((words or {}).get("wiki") or [])
+    if part == "skin":
+        wiki = [(w, c) for w, c in wiki if w in {"pale", "light", "tan", "dark", "fair", "blue", "green", "red", "grey",
+                                                 "purple", "pink"}]
+    return danbooru, wiki
+
+
+def agrees_with_words(part, word, words):
+    danbooru, wiki = control_words(part, words)
+    return any(words_agree(part, word, w) for w, _ in danbooru + wiki)
 
 
 def check_words(part, entry, words):
     """Compares the measured color name with the control words. Returns (verdict, doubt or None).
 
     words: {"danbooru": [(word, frequency)], "wiki": [(word, count)]}. Danbooru tags under 15 % of the character's
-    pictures are noise (characters drawn next to them); a contradiction needs a clear control word.
+    pictures, or under half the most frequent color, come from the characters drawn next to this one (Luffy's
+    pictures are 67 % "black hair" and 24 % "orange hair", Nami's); a contradiction needs a clear control word.
     """
     measured = entry["word"]
-    danbooru = [(w, f) for w, f in words.get("danbooru") or [] if f >= 0.15]
-    wiki = list(words.get("wiki") or [])
+    danbooru, wiki = control_words(part, words)
     if part == "skin":
         natural = {"pale", "light", "tan", "dark"}
-        wiki = [(w, c) for w, c in wiki if w in natural | {"fair", "blue", "green", "red", "grey", "purple", "pink"}]
         # Danbooru only tags unusual skins: no tag at all agrees with an ordinary skin tone
         if not danbooru and not wiki and measured in natural:
             return "accord", None
@@ -170,7 +243,7 @@ def settle_outfit(observations_by_part):
         obs = observations_by_part.get(part) or []
         if not obs:
             continue
-        groups = measure.densest_groups([o["lab"] for o in obs], radius=SAME_COLOR, max_groups=4)
+        groups = measure.densest_groups([o["lab"] for o in obs], radius=GROUP_RADIUS, max_groups=4)
         groups_by_part[part] = [{
             "base": measure.oklab_to_hex(g["value"]), "word": measure.color_word(g["value"], part),
             "images": len(g["members"]),

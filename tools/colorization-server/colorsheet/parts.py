@@ -174,6 +174,100 @@ def sheet_parts(masks):
     return {"hair": hair, "eyes": eyes, "skin": skin, "top": top, "bottom": bottom}
 
 
+def keep_character(parts, head_box, body_box=None):
+    """Keeps, in each part mask, only the character whose head is `head_box` (crop coordinates).
+
+    Covers are crowded: a neighbor's hair or sleeve often enters the crop. Hair and skin keep the connected pieces
+    that touch the head; eyes, the pixels inside the head; top and bottom, the pieces inside the single-character body
+    box (none without one).
+    """
+    h, w = next(iter(parts.values())).shape
+    x0, y0, x1, y1 = head_box
+    pad = max(x1 - x0, y1 - y0) // 10
+    head = np.zeros((h, w), bool)
+    head[max(0, y0 - pad):y1 + pad, max(0, x0 - pad):x1 + pad] = True
+    out = {}
+    for part in ("hair", "skin"):
+        count, labels = cv2.connectedComponents(parts[part].astype(np.uint8))
+        touching = np.unique(labels[head & parts[part]])
+        out[part] = np.isin(labels, touching[touching > 0])
+    out["eyes"] = parts["eyes"] & head
+    for part in ("top", "bottom"):
+        if body_box is None:
+            out[part] = np.zeros((h, w), bool)
+            continue
+        bx0, by0, bx1, by1 = body_box
+        body = np.zeros((h, w), bool)
+        body[by0:by1, bx0:bx1] = True
+        body[:y1] = False  # clothes are under the head
+        count, labels = cv2.connectedComponents(parts[part].astype(np.uint8))
+        inside = labels[body & parts[part]]
+        if not inside.size:
+            out[part] = np.zeros((h, w), bool)
+            continue
+        ids, counts = np.unique(inside[inside > 0], return_counts=True)
+        out[part] = np.isin(labels, ids[counts >= 0.2 * counts.max()]) & body
+    return out
+
+
+def _bbox(mask):
+    ys, xs = np.nonzero(mask)
+    return (xs.min(), ys.min(), xs.max() + 1, ys.max() + 1) if len(xs) else None
+
+
+def checked_parts(raw, head_box, body_box=None, restrict=True):
+    """Hair, eyes, skin, top and bottom of one character, each kept only when its place is plausible.
+
+    See-through reads anime pictures well but often misreads the cover art (a laughing face taken for hair, black or
+    green hair left out). A wrong mask would give a confident wrong color, so a part that fails its check is dropped
+    for this image, and the hair falls back to the band just above the face. Returns (masks, problems).
+    """
+    masks = sheet_parts(raw)
+    if restrict:
+        masks = keep_character(masks, head_box, body_box)
+    h, w = masks["hair"].shape
+    x0, y0, x1, y1 = head_box
+    head_area = max(1, (x1 - x0) * (y1 - y0))
+    empty = np.zeros((h, w), bool)
+    problems = []
+    face = masks["skin"]
+    face_box = _bbox(face)
+    face_ok = face.sum() >= 0.04 * head_area and face_box is not None
+    if face_ok:
+        cy, cx = np.mean(np.nonzero(face), axis=1)
+        face_ok = x0 <= cx <= x1 and y0 <= cy <= y1
+    if not face_ok:
+        problems.append("visage introuvable")
+        return {"hair": empty, "eyes": empty, "skin": empty, "top": _below(masks["top"], head_box),
+                "bottom": _below(masks["bottom"], head_box)}, problems
+    fx0, fy0, fx1, fy1 = face_box
+    face_y = np.mean(np.nonzero(face)[0])
+    hair = masks["hair"]
+    near_face = np.zeros((h, w), bool)
+    near_face[fy0:fy1, fx0:fx1] = True
+    hair_ok = (hair.sum() >= 0.03 * head_area and np.mean(np.nonzero(hair)[0]) < face_y
+               and (hair & near_face).sum() < 0.5 * hair.sum())
+    if not hair_ok:
+        problems.append("cheveux repris au-dessus du visage")
+        band = np.zeros((h, w), bool)
+        margin = (fx1 - fx0) // 6
+        top = max(0, y0 - (y1 - y0) // 10)
+        band[top:fy0 + (fy1 - fy0) // 8, max(0, fx0 - margin):fx1 + margin] = True
+        hair = band & ~face & ~raw["headwear"] & ~raw["eyes"]
+    eyes = masks["eyes"] & near_face
+    if not 0 < eyes.sum() < 0.25 * face.sum():
+        eyes = empty
+    return {"hair": hair, "eyes": eyes, "skin": face, "top": _below(masks["top"], head_box),
+            "bottom": _below(masks["bottom"], head_box)}, problems
+
+
+def _below(mask, head_box):
+    """Clothes are under the head: a top or bottom mask centered above the chin is a misreading."""
+    if not mask.any():
+        return mask
+    return mask if np.mean(np.nonzero(mask)[0]) > head_box[3] else np.zeros_like(mask)
+
+
 def region_parts(rgb, head_box, person_box):
     """Fallback without the parsing model: rough regions from the head and person boxes.
 
@@ -195,10 +289,12 @@ def region_parts(rgb, head_box, person_box):
     hair = np.zeros((h, w), bool)
     hy = y0 + (y1 - y0) // 2
     hair[y0:hy, x0:x1] = ~natural[:hy - y0]
-    px0, py0, px1, py1 = person_box
-    body_h = py1 - y1
     top = np.zeros((h, w), bool)
     bottom = np.zeros((h, w), bool)
+    if person_box is None:
+        return {"hair": hair, "eyes": np.zeros((h, w), bool), "skin": skin, "top": top, "bottom": bottom}
+    px0, py0, px1, py1 = person_box
+    body_h = py1 - y1
     cx0, cx1 = px0 + (px1 - px0) // 5, px1 - (px1 - px0) // 5
     if body_h > (y1 - y0):
         top[y1 + body_h // 10:y1 + body_h * 4 // 10, cx0:cx1] = True

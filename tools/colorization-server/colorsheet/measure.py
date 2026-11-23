@@ -168,28 +168,55 @@ def three_tones(lab, achromatic_chroma=0.035):
     if not peaks:
         return None
     base, base_share = peaks[0]
+    shadow, highlight = _shadow_highlight(base, base_share, peaks[1:], achromatic_chroma)
+    return {"base": base, "shadow": shadow, "highlight": highlight, "share": base_share}
+
+
+def _shadow_highlight(base, base_share, others, achromatic_chroma=0.035):
     bl, bc, bh = lch(base)
     shadow = highlight = None
-    for tone, share in peaks[1:]:
+    for tone, share in others:
         tl, tc, th = lch(tone)
         if bc < achromatic_chroma or tc < achromatic_chroma:
             same_family = bc < 0.08 and tc < 0.08
         else:
             same_family = hue_distance(bh, th) < 40
-        if tl < bl - 0.05 and same_family and share >= 0.06 * base_share * 2 and shadow is None:
+        if tl < bl - 0.05 and same_family and share >= 0.12 * base_share and shadow is None:
             shadow = tone
         # Highlights are often whiter than the base: same hue or less saturated
         if tl > bl + 0.05 and (same_family or tc < bc * 0.6) and share >= 0.02 and highlight is None:
             highlight = tone
-    return {"base": base, "shadow": shadow, "highlight": highlight, "share": base_share}
+    return shadow, highlight
+
+
+def tone_candidates(lab, max_candidates=3, min_share=0.12):
+    """The main tones of a part, each with its own shadow and highlight, largest first.
+
+    For the hair: the area the parts model calls hair often holds a hat as well (Luffy's straw hat, Chopper's pink
+    hat), or the background when the hair is taken above the face. Each main tone is kept as a candidate; the choice
+    is made over all the images (rules.settle_part).
+    """
+    peaks = tone_peaks(lab)
+    out = []
+    for i, (tone, share) in enumerate(peaks):
+        if share < min_share or len(out) >= max_candidates:
+            continue
+        shadow, highlight = _shadow_highlight(tone, share, [p for j, p in enumerate(peaks) if j != i])
+        out.append({"base": tone, "shadow": shadow, "highlight": highlight, "share": share})
+    return out
 
 
 # Minimum clean pixels for a part to be measured on one image
 MIN_PIXELS = {"eyes": 12, "skin": 60, "hair": 80, "top": 120, "bottom": 120}
 
 
-def measure_part(rgb, mask, part):
-    """Measures one part of one character on one image. Returns None when too few pixels are left."""
+def measure_part(rgb, mask, part, exclude=None, candidates=False):
+    """Measures one part of one character on one image. Returns None when too few pixels are left.
+
+    exclude: an OKLab tone (the character's skin) whose pixels are left out: the eyelids around small eyes, the bare
+    arms in an open shirt, the forehead in a band of hair. candidates: return the main tones (tone_candidates)
+    instead of the single most frequent one.
+    """
     if part == "eyes":
         # Eyes are small and mostly drawn lines: no erosion, no line removal; the white of the eye is dropped
         clean = mask.astype(bool)
@@ -199,8 +226,15 @@ def measure_part(rgb, mask, part):
     else:
         clean = clean_part_mask(rgb, mask, erode=1 if mask.sum() < 2000 else 2)
         lab = rgb_to_oklab(rgb[clean])
+    if exclude is not None and len(lab):
+        lab = lab[np.linalg.norm(lab - np.asarray(exclude), axis=1) >= 0.07]
     if len(lab) < MIN_PIXELS.get(part, 80):
         return None
+    if candidates:
+        found = tone_candidates(lab)
+        for tones in found:
+            tones["pixels"] = int(len(lab))
+        return found or None
     tones = three_tones(lab)
     if tones is None:
         return None
@@ -268,7 +302,7 @@ _NEIGHBORS = {
                            ("orange", "blonde"), ("orange", "yellow"), ("blonde", "yellow"), ("blonde", "brown"),
                            ("blonde", "white"), ("yellow", "brown"), ("yellow", "green"), ("green", "aqua"),
                            ("aqua", "blue"), ("blue", "purple"), ("purple", "pink"), ("black", "grey"),
-                           ("grey", "white"), ("black", "brown"), ("black", "blue"), ("grey", "silver"),
+                           ("grey", "white"), ("black", "brown"), ("grey", "silver"),
                            ("white", "silver")]
 }
 
@@ -278,11 +312,11 @@ def words_agree(a, b):
     return a == b or frozenset((a, b)) in _NEIGHBORS
 
 
-# Natural skin tones in OKLCh (lightness, chroma, hue), wide on purpose: a colored skin (blue fish-men, green
-# monsters) falls outside
+# Natural skin tones in OKLCh (lightness, chroma, hue), wide on purpose (anime skins are often pinkish, hue down to
+# 15°): a colored skin (blue fish-men, green monsters) falls outside
 def is_natural_skin(lab):
     L, C, h = lch(lab)
-    return 0.4 <= L <= 0.97 and C <= 0.16 and (30 <= h <= 95 or C < 0.03)
+    return 0.4 <= L <= 0.97 and C <= 0.16 and (15 <= h <= 95 or C < 0.03)
 
 
 def skin_word(lab):

@@ -1,10 +1,16 @@
 """Doubt rules (D14) and the choice of a color over several images."""
+import itertools
+
 from colorsheet import measure, rules
 
 
-def obs(code, kind="volume_cover", ref="ref", volume=None):
-    return {"lab": measure.hex_to_oklab(code), "shadow": None, "highlight": None, "ref": ref, "kind": kind,
-            "volume": volume}
+_refs = itertools.count(1)
+
+
+def obs(code, kind="volume_cover", ref=None, volume=None, weight=1.0):
+    """One measure; each call is a different image unless `ref` is given."""
+    return {"lab": measure.hex_to_oklab(code), "shadow": None, "highlight": None,
+            "ref": ref or f"ref-{next(_refs):02d}", "kind": kind, "volume": volume, "weight": weight}
 
 
 GREENS = ["#3cb043", "#40b448", "#38a83f"]
@@ -18,7 +24,7 @@ def test_single_image_is_a_doubt():
 
 
 def test_agreeing_covers_pass_without_question():
-    observations = [obs(c, ref=f"ref-{i}") for i, c in enumerate(GREENS)] + [obs("#45b84d", "anime")]
+    observations = [obs(c) for c in GREENS] + [obs("#45b84d", "anime")]
     entry, doubts = rules.settle_part("hair", observations)
     assert doubts == []
     assert entry["kind"] == "volume_cover" and entry["images"] == 3 and entry["of"] == 3
@@ -114,3 +120,32 @@ def test_confidence():
     assert rules.confidence(2, 2) == 0.75
     assert rules.confidence(4, 5) == 0.75
     assert rules.confidence(0, 0) == 0.0
+
+
+def test_hat_over_the_hair_is_resolved_by_the_control_words_and_reported():
+    # Each cover: the straw hat (larger share) and the black hair, both measured in the hair area
+    observations = []
+    for i in range(4):
+        ref = f"cover-{i}"
+        observations += [obs("#d8a868", ref=ref, weight=0.55), obs("#15151b", ref=ref, weight=0.40)]
+    words = {"danbooru": [("black", 0.67), ("orange", 0.24)]}
+    entry, doubts = rules.settle_part("hair", observations, words)
+    assert entry["word"] == "black" and entry["images"] == 4
+    assert any("sans doute un chapeau" in d for d in doubts)
+    # Without control words, the densest group stays
+    entry, doubts = rules.settle_part("hair", observations)
+    assert entry["word"] != "black"
+
+
+def test_single_image_tone_confirmed_by_words():
+    observations = [obs("#9aa63a", "anime", ref="anilist", weight=0.5),  # knitted cap
+                    obs("#17161c", "anime", ref="anilist", weight=0.3)]  # hair
+    entry, doubts = rules.settle_part("hair", observations, {"danbooru": [("black", 0.8)]})
+    assert entry["word"] == "black"
+    assert len(doubts) == 1 and "une image" in doubts[0] and "mots de contrôle" in doubts[0]
+
+
+def test_shades_of_one_color_are_one_group():
+    observations = [obs("#6dafcf"), obs("#438bc3"), obs("#8fd0fc")]
+    entry, doubts = rules.settle_part("hair", observations)
+    assert entry["word"] == "blue" and entry["images"] >= 2
