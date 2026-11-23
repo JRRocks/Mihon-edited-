@@ -28,11 +28,21 @@ Une décision ne se réécrit pas : elle se révise par une ligne nouvelle, dat�
 | D19 | 2026-11-22 | Développeur | Rien qui relève du droit d'auteur ne part sur la branche publique : ni pages de manga, ni couvertures, ni images de personnages. Les fiches y gardent les couleurs mesurées, l'adresse de chaque image source et les cadrages ; les images restent hors du dépôt. | Le dépôt est public ; une couleur mesurée et une adresse ne reproduisent pas l'œuvre |
 | D20 | 2026-11-22 | Développeur | `CLAUDE.md` ne part pas sur GitHub tant qu'il contient le chemin du miroir Drive ; une session cloud reçoit dans son brief les consignes dont elle a besoin. | Règle « rien de privé » du dépôt public |
 | D21 | 2026-11-22 | Développeur | Remplace D20 : le miroir Drive passe dans `CLAUDE.local.md`, qui reste sur le PC (exclu de git) ; `CLAUDE.md`, sans chemin privé, part sur GitHub. | Les sessions cloud lisent ainsi les consignes du projet ; Claude Code charge `CLAUDE.local.md` avec `CLAUDE.md`, rien ne change sur le PC |
+| D22 | 2026-11-23 | Utilisateur | Remplace D13 pour le jeu d'essai : « Pour gagner des délais, on va faire les tests sans connexion mobile-pc. Voici mon fichier. Fait les tests dessus. » Les pages d'essai viennent d'un chapitre téléchargé par l'application (fichier CBZ : One Piece, chapitre 1192), déposé dans la conversation, et non plus du téléphone vers le serveur. | Gagner du temps ; le fichier est celui que l'application garde après téléchargement |
+| D23 | 2026-11-23 | Développeur | Jeu d'essai tiré du CBZ : pages dans l'ordre du fichier, à leur taille d'origine, dans `Documents\Mihon colorisation\essais\One Piece\chapitre-1192\`. Les pages déjà en couleur (la page de crédits du groupe de traduction) sont écartées, comme le fait l'application. | Mêmes pages que le téléphone aurait envoyées, sans la réduction à 1024 px, qui ne sert qu'au transfert |
+| D24 | 2026-11-23 | Développeur | Reconnaissance (tâche 3) : Magi v2 au commit `fbc890f`, sur le processeur et sans sa lecture des textes ; banque d'exemples = les images de référence de la fiche faite par la session cloud (couvertures recadrées et image AniList), passées en gris. Le taux de bons noms se mesure contre un relevé fait à l'œil sur les pages numérotées, sans voir les noms proposés. | Le modèle prévu au § 10 ; le processeur suffit pour un chapitre et évite 2,5 Go de bibliothèques pour la carte graphique ; un relevé fait en voyant les réponses serait complaisant |
 
 ## En attente
 
-Aucune question en attente. Les quatre questions posées le 2026-11-22 ont reçu leur réponse le jour même, et le
-feu vert est donné (D16).
+Questions posées le 2026-11-23, après l'arrêt de la tâche 3 (0 nom juste sur 29, seuil 85 %) :
+
+| N° | Question | Réponse |
+|---|---|---|
+| Q5 | Quelle voie pour reconnaître les personnages : autre modèle (CCIP), noms donnés par l'utilisateur une fois par arc, couleurs stables sans nom, ou essai sur un chapitre plus simple | en attente |
+| Q6 | Fusionner dans `colorisation` la branche de la session cloud (`claude/magical-mendel-3nv2ua` : outil et fiche couleurs) | en attente |
+| Q7 | La fiche couleurs de One Piece est-elle juste (critère de la tâche 2) | en attente |
+
+Questions du 2026-11-22, toutes répondues le jour même ; le feu vert est donné (D16) :
 
 | N° | Question | Réponse |
 |---|---|---|

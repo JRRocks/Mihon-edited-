@@ -4,8 +4,8 @@ Chantier en cours : **colorisation fidèle** (personnages aux couleurs officiell
 des scènes, tenues selon l'arc). La logique est décrite dans
 [`specs/colorisation-fidele.md`](specs/colorisation-fidele.md), les décisions dans [`DECISIONS.md`](DECISIONS.md).
 
-État au 2026-11-22 : feu vert donné (D16). Série d'essai : One Piece (D17). La tâche 2 tourne en session cloud
-sur la branche `colorisation` ; les autres tâches de la partie 1 se font sur le PC.
+État au 2026-11-23 : feu vert donné (D16). Série d'essai : One Piece (D17), chapitre 1192 fourni en fichier (D22).
+Tâches 1 et 2 faites ; tâche 3 arrêtée sous le seuil, la suite attend le choix de l'utilisateur.
 
 ## Partie 1 : la preuve sur le PC, avec l'application actuelle
 
@@ -13,9 +13,9 @@ Chaque tâche se termine par une image ou une page que l'utilisateur ouvre et ju
 
 | N° | Tâche | Ce que l'utilisateur voit quand c'est réussi | État |
 |---|---|---|---|
-| 1 | Jeu d'essai : le serveur du PC garde les pages qu'il reçoit ; l'utilisateur lance depuis le téléphone le coloriage d'un chapitre de One Piece (D13, D17) | Le dossier d'essai contient les pages du chapitre, dans l'ordre, et le titre de la série | en cours : capture prête et essayée (2026-11-23), en attente du chapitre envoyé depuis le téléphone |
-| 2 | Fiche de la série d'essai, construite par la recherche automatique | Une page « fiche couleurs » : les personnages principaux, leurs couleurs, d'où vient chaque couleur, et les points où le PC doute (D14) ; il dit si c'est juste | en cours (session cloud, D16) |
-| 3 | Reconnaissance des personnages sur le chapitre d'essai (téléchargement autorisé par D12) | Les pages du chapitre avec un nom sur chaque personnage ; le taux de bons noms est écrit. Sous 85 % sur les personnages principaux, on s'arrête et on choisit une autre voie | à faire |
+| 1 | Jeu d'essai : le serveur du PC garde les pages qu'il reçoit ; l'utilisateur lance depuis le téléphone le coloriage d'un chapitre de One Piece (D13, D17) | Le dossier d'essai contient les pages du chapitre, dans l'ordre, et le titre de la série | terminée le 2026-11-23 par le fichier CBZ du chapitre 1192 (D22, D23) : 14 pages dans l'ordre, titre et numéro lus dans le fichier ; la capture depuis le téléphone reste prête mais n'a pas servi |
+| 2 | Fiche de la série d'essai, construite par la recherche automatique | Une page « fiche couleurs » : les personnages principaux, leurs couleurs, d'où vient chaque couleur, et les points où le PC doute (D14) ; il dit si c'est juste | faite par la session cloud (branche `claude/magical-mendel-3nv2ua`, non fusionnée) ; ses 45 tests repassés sur le PC le 2026-11-23 ; en attente du jugement de l'utilisateur |
+| 3 | Reconnaissance des personnages sur le chapitre d'essai (téléchargement autorisé par D12) | Les pages du chapitre avec un nom sur chaque personnage ; le taux de bons noms est écrit. Sous 85 % sur les personnages principaux, on s'arrête et on choisit une autre voie | arrêtée le 2026-11-23 : 0 nom juste sur 29 apparitions (Magi v2, banque tirée de la fiche) ; en attente du choix d'une autre voie par l'utilisateur |
 | 4 | Comparaison des moteurs sur dix pages, références données case par case : moteur installé contre moteur spécialisé (D12) | Une planche avant et après par moteur, avec le temps par page ; il choisit le moteur | à faire |
 | 5 | Verrou des couleurs et contrôle | Sur tout le chapitre, cheveux, peau et tenue de chaque personnage reconnu gardent la même couleur ; la liste des pages douteuses est affichée | à faire |
 | 6 | Lieux, objets et inconnus | Un décor, un objet ou un figurant revu plus loin garde la couleur de sa première apparition, dans le chapitre puis dans un second chapitre de la même série | à faire |
