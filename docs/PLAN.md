@@ -5,8 +5,9 @@ des scènes, tenues selon l'arc). La logique est décrite dans
 [`specs/colorisation-fidele.md`](specs/colorisation-fidele.md), les décisions dans [`DECISIONS.md`](DECISIONS.md).
 
 État au 2026-11-23 : feu vert donné (D16). Série d'essai : One Piece (D17), chapitre 1192 fourni en fichier (D22).
-Tâches 1 et 2 faites (la fiche de la session cloud est fusionnée dans `colorisation`, D26) ; tâche 3 arrêtée :
-Magi v2 puis CCIP (D25) restent à 0 nom juste sur 29, la suite attend le choix de l'utilisateur.
+Tâches 1 et 2 faites (la fiche de la session cloud est fusionnée dans `colorisation`, D26 ; son jugement attend
+l'utilisateur, qui l'a reçue en image). Tâche 3 : Magi v2 puis CCIP (D25) restent à 0 nom juste sur 29 ; la
+reconnaissance devient une échelle d'IA, le PC puis Claude, Claude en session en dernier recours (D27 à D29, D36).
 
 ## Partie 1 : la preuve sur le PC, avec l'application actuelle
 
@@ -16,7 +17,10 @@ Chaque tâche se termine par une image ou une page que l'utilisateur ouvre et ju
 |---|---|---|---|
 | 1 | Jeu d'essai : le serveur du PC garde les pages qu'il reçoit ; l'utilisateur lance depuis le téléphone le coloriage d'un chapitre de One Piece (D13, D17) | Le dossier d'essai contient les pages du chapitre, dans l'ordre, et le titre de la série | terminée le 2026-11-23 par le fichier CBZ du chapitre 1192 (D22, D23) : 14 pages dans l'ordre, titre et numéro lus dans le fichier ; la capture depuis le téléphone reste prête mais n'a pas servi |
 | 2 | Fiche de la série d'essai, construite par la recherche automatique | Une page « fiche couleurs » : les personnages principaux, leurs couleurs, d'où vient chaque couleur, et les points où le PC doute (D14) ; il dit si c'est juste | faite par la session cloud (outil `color_sheet.py`, D30 à D35), fusionnée dans `colorisation` le 2026-11-23 (D26) ; ses 45 tests repassés sur le PC ; à juger : [fiche One Piece](../tools/colorization-server/essais/one-piece/fiche.md) |
-| 3 | Reconnaissance des personnages sur le chapitre d'essai (téléchargement autorisé par D12) | Les pages du chapitre avec un nom sur chaque personnage ; le taux de bons noms est écrit. Sous 85 % sur les personnages principaux, on s'arrête et on choisit une autre voie | arrêtée le 2026-11-23 : 0 nom juste sur 29 apparitions avec Magi v2, puis avec CCIP (D25), banque tirée de la fiche ; en attente du choix d'une autre voie par l'utilisateur |
+| 3 | Reconnaissance des personnages sur le chapitre d'essai (téléchargement autorisé par D12) | Les pages du chapitre avec un nom sur chaque personnage ; le taux de bons noms est écrit. Sous 85 % sur les personnages principaux, on s'arrête et on choisit une autre voie | en cours : Magi v2 puis CCIP (D25) arrêtés le 2026-11-23 à 0 nom juste sur 29 ; voie choisie : l'échelle d'IA (D27 à D29, D36), mesurée échelon par échelon sur le même chapitre et le même relevé (3a à 3c) |
+| 3a | Échelons Claude (Haiku, Sonnet, Opus, Fable) sur le chapitre 1192 | Le taux de bons noms de chaque échelon et de l'échelle entière, le nombre de cas laissés à Claude en session, et le coût estimé par chapitre | faite le 2026-11-23 avec les modèles de la session, pas encore par l'API : Sonnet et Fable nomment juste 22 des 23 apparitions encadrées ; l'échelle (règle D37) donne 22 sur 29 (76 %), aucun personnage extérieur nommé, 6 cadres sur 99 pour la session, 1 à 2 $ par chapitre au plus (estimation). Sous 85 % à cause des 6 apparitions sans cadre |
+| 3b | Échelons du PC entre CCIP et Claude, et un détecteur fait pour le noir et blanc (les 6 apparitions sans cadre) ; téléchargements soumis à l'accord de l'utilisateur | Même relevé : ce que chaque modèle du PC tranche seul, sans erreur sûre d'elle, et combien d'apparitions sans cadre le détecteur retrouve | à faire : téléchargements demandés (Q12) |
+| 3c | L'échelle branchée au serveur : compte API Anthropic ouvert par l'utilisateur, cas bloqués gardés pour la session (D29) | Sur le chapitre d'essai, chaque personnage reçoit un nom sûr ou attend la session ; le chapitre n'est colorié qu'ensuite | à faire |
 | 4 | Comparaison des moteurs sur dix pages, références données case par case : moteur installé contre moteur spécialisé (D12) | Une planche avant et après par moteur, avec le temps par page ; il choisit le moteur | à faire |
 | 5 | Verrou des couleurs et contrôle | Sur tout le chapitre, cheveux, peau et tenue de chaque personnage reconnu gardent la même couleur ; la liste des pages douteuses est affichée | à faire |
 | 6 | Lieux, objets et inconnus | Un décor, un objet ou un figurant revu plus loin garde la couleur de sa première apparition, dans le chapitre puis dans un second chapitre de la même série | à faire |

@@ -147,6 +147,13 @@ Le chapitre est analysé en entier avant le premier coloriage, et le résultat e
   travaille sur un chapitre entier et s'appuie sur les liens « même personnage » d'une page à l'autre.
 - **Seuil et écart** : un nom n'est retenu que si son score dépasse un seuil et devance nettement le second. Sinon
   le personnage est « inconnu n » pour ce chapitre.
+- **Échelle de reconnaissance** (D27 à D29, D36, après l'échec de Magi v2 et de CCIP sur le chapitre 1192) : un
+  personnage que l'échelon courant ne nomme pas avec assurance passe à une IA plus grosse. D'abord les IA du PC
+  (Magi v2 et CCIP, puis des modèles plus gros, chacun téléchargé avec l'accord de l'utilisateur) ; ensuite Claude
+  par internet, de Haiku à Sonnet, Opus puis Fable, qui reçoit la page avec ses cadres numérotés et les images de la
+  fiche. Chaque échelon répond « sûr » ou « incertain » ; seul « sûr » arrête la montée. Ce qu'aucun échelon ne
+  tranche attend Claude en session, avec l'utilisateur, et le chapitre n'est colorié qu'ensuite (D29). Une IA ne
+  donne qu'un nom : les couleurs restent celles de la fiche (D2, D36).
 - **Exemples noir et blanc** : un recadrage n'entre dans la fiche que s'il est appuyé par un autre recadrage déjà
   classé dans le même groupe de pages, ou validé par l'utilisateur. L'ajout automatique au meilleur score se trompe
   dans 62 à 89 % des cas (Re:Cognize, 2026).

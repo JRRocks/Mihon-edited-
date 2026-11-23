@@ -2,6 +2,41 @@
 
 Les entrées les plus récentes en haut. On ne réécrit pas une entrée : une erreur se corrige par une entrée nouvelle.
 
+## 2026-11-23 · Colorisation fidèle : l'échelle d'IA, premiers essais avec Claude
+
+- Branche et commit : `colorisation` (commit « Record the AI ladder decisions and the Claude rung trial »).
+- Objectif : appliquer les réponses Q8 à Q11 (échelle d'IA : D27 à D29, D36) et montrer la fiche en image (Q7).
+- Réalisé :
+  - fiche couleurs rendue en une seule image (`fiche-a-juger.jpg`, dans le dossier de la fiche, hors du dépôt) et
+    envoyée à l'utilisateur ;
+  - essai des quatre échelons Claude sur le chapitre 1192 avec les modèles de cette session (sous-agents), sans
+    compte API : chaque modèle reçoit les 13 pages aux cadres numérotés et une image de chaque personnage de la
+    fiche, copiées dans un dossier à part, loin du relevé ; il nomme chaque cadre et se dit « sûr » ou « incertain ».
+    Réponses, script de calcul et scores dans `reconnaissance\claude\` du jeu d'essai.
+- Résultat :
+  - noms justes sur les 29 apparitions : Haiku 15, Sonnet 22, Opus 20, Fable 22. Les 6 apparitions sans cadre
+    plafonnent tout le monde à 23 ;
+  - échelle « le premier sûr gagne » : 19 sur 29 ; Haiku nomme Luffy, sûr de lui, un monstre de la page 14, et Fable
+    prend un géant pour Usopp (page 10) ;
+  - échelle « deux échelons successifs d'accord » (D37) : 22 sur 29 (76 %), aucun personnage extérieur nommé,
+    6 cadres sur 99 laissés à la session ;
+  - coût aux tarifs de l'API, estimé : 1 à 2 $ par chapitre au plus (toutes les pages à tous les échelons) ;
+  - l'écart restant jusqu'à 85 % vient de la détection : Magi v2 ne voit pas 6 apparitions (Luffy 4 fois, Usopp,
+    Franky) ; Opus et Fable en signalent 3 ou 4 sans cadre.
+- Décisions : D27 à D29 et D36 (utilisateur), D37 (développeur).
+- Vérifications :
+  - les deux noms faux donnés « sûrs » revus à l'œil sur leur cadre : le relevé avait raison (un géant de Little
+    Garden, un monstre) ;
+  - modèles candidats pour le PC relevés sur leur page Hugging Face (taille, licence, date) : détecteur entraîné sur
+    Manga109, étiqueteur Danbooru (connaît 7 des 10 personnages, pas Franky, Brook ni Jinbe), Qwen3-VL 8B.
+- Non vérifié :
+  - les échelons Claude appelés par l'API : ils ont tourné dans la session (mêmes modèles, autre consigne) ;
+  - la règle D37 est choisie sur ce chapitre-ci ; le relevé est de Claude Opus, l'un des échelons essayés.
+- Problèmes et dette : la fiche couleurs elle-même a des erreurs visibles (le « bas » de Luffy mesuré rouge ; Usopp
+  et Chopper déjà en doute), en attente du jugement de l'utilisateur.
+- Prochaine étape : accord de l'utilisateur sur les téléchargements des échelons du PC (Q12), puis tâche 3b ;
+  jugement de la fiche (Q7).
+
 ## 2026-11-23 · Colorisation fidèle : fiche fusionnée, la reconnaissance échoue aussi avec CCIP
 
 - Branche et commit : `colorisation` (fusion de `claude/magical-mendel-3nv2ua`, puis le commit « Add the CCIP
