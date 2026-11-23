@@ -31,6 +31,8 @@ Une décision ne se réécrit pas : elle se révise par une ligne nouvelle, dat�
 | D22 | 2026-11-23 | Utilisateur | Remplace D13 pour le jeu d'essai : « Pour gagner des délais, on va faire les tests sans connexion mobile-pc. Voici mon fichier. Fait les tests dessus. » Les pages d'essai viennent d'un chapitre téléchargé par l'application (fichier CBZ : One Piece, chapitre 1192), déposé dans la conversation, et non plus du téléphone vers le serveur. | Gagner du temps ; le fichier est celui que l'application garde après téléchargement |
 | D23 | 2026-11-23 | Développeur | Jeu d'essai tiré du CBZ : pages dans l'ordre du fichier, à leur taille d'origine, dans `Documents\Mihon colorisation\essais\One Piece\chapitre-1192\`. Les pages déjà en couleur (la page de crédits du groupe de traduction) sont écartées, comme le fait l'application. | Mêmes pages que le téléphone aurait envoyées, sans la réduction à 1024 px, qui ne sert qu'au transfert |
 | D24 | 2026-11-23 | Développeur | Reconnaissance (tâche 3) : Magi v2 au commit `fbc890f`, sur le processeur et sans sa lecture des textes ; banque d'exemples = les images de référence de la fiche faite par la session cloud (couvertures recadrées et image AniList), passées en gris. Le taux de bons noms se mesure contre un relevé fait à l'œil sur les pages numérotées, sans voir les noms proposés. | Le modèle prévu au § 10 ; le processeur suffit pour un chapitre et évite 2,5 Go de bibliothèques pour la carte graphique ; un relevé fait en voyant les réponses serait complaisant |
+| D25 | 2026-11-23 | Utilisateur | Après l'arrêt de la tâche 3 (0 nom juste sur 29), la voie essayée est « Autre modèle, CCIP (recommandé) » : le même essai sur les mêmes pages, avec le modèle qui a servi à construire la fiche (384 Mo). | Réponse à Q5 ; le moins cher des essais, sans rien demander à l'utilisateur |
+| D26 | 2026-11-23 | Utilisateur | La branche de la session cloud (`claude/magical-mendel-3nv2ua`) est fusionnée dans `colorisation` : « Oui, fusionner (recommandé) ». Les entrées de journal des deux sessions sont gardées. | Réponse à Q6 ; l'outil de la fiche et ses données rejoignent le reste du travail |
 
 ## En attente
 
@@ -38,8 +40,8 @@ Questions posées le 2026-11-23, après l'arrêt de la tâche 3 (0 nom juste sur
 
 | N° | Question | Réponse |
 |---|---|---|
-| Q5 | Quelle voie pour reconnaître les personnages : autre modèle (CCIP), noms donnés par l'utilisateur une fois par arc, couleurs stables sans nom, ou essai sur un chapitre plus simple | en attente |
-| Q6 | Fusionner dans `colorisation` la branche de la session cloud (`claude/magical-mendel-3nv2ua` : outil et fiche couleurs) | en attente |
+| Q5 | Quelle voie pour reconnaître les personnages : autre modèle (CCIP), noms donnés par l'utilisateur une fois par arc, couleurs stables sans nom, ou essai sur un chapitre plus simple | Autre modèle, CCIP (D25) |
+| Q6 | Fusionner dans `colorisation` la branche de la session cloud (`claude/magical-mendel-3nv2ua` : outil et fiche couleurs) | Oui (D26) |
 | Q7 | La fiche couleurs de One Piece est-elle juste (critère de la tâche 2) | en attente |
 
 Questions du 2026-11-22, toutes répondues le jour même ; le feu vert est donné (D16) :
