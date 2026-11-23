@@ -49,6 +49,7 @@ Questions posées le 2026-11-23, après l'arrêt de la tâche 3 (0 nom juste sur
 | Q5 | Quelle voie pour reconnaître les personnages : autre modèle (CCIP), noms donnés par l'utilisateur une fois par arc, couleurs stables sans nom, ou essai sur un chapitre plus simple | Autre modèle, CCIP (D25) |
 | Q6 | Fusionner dans `colorisation` la branche de la session cloud (`claude/magical-mendel-3nv2ua` : outil et fiche couleurs) | Oui (D26) |
 | Q7 | La fiche couleurs de One Piece est-elle juste (critère de la tâche 2) | en attente |
+| Q8 | Après l'échec de CCIP aussi (0 sur 29), quelle voie : essai sur un chapitre où l'équipage a son aspect habituel, noms donnés par l'utilisateur une fois par arc, ou couleurs stables sans nom | en attente |
 
 Questions du 2026-11-22, toutes répondues le jour même ; le feu vert est donné (D16) :
 

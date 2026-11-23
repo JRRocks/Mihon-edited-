@@ -2,6 +2,44 @@
 
 Les entrées les plus récentes en haut. On ne réécrit pas une entrée : une erreur se corrige par une entrée nouvelle.
 
+## 2026-11-23 · Colorisation fidèle : fiche fusionnée, la reconnaissance échoue aussi avec CCIP
+
+- Branche et commit : `colorisation` (fusion de `claude/magical-mendel-3nv2ua`, puis le commit « Add the CCIP
+  recognition trial (task 3, D25) »).
+- Objectif : appliquer les deux réponses de l'utilisateur : essayer CCIP (D25), fusionner la branche de la session
+  cloud (D26).
+- Réalisé :
+  - fusion : l'outil de la fiche (`color_sheet.py`, paquet `colorsheet/`, 45 tests) et la fiche de One Piece
+    rejoignent `colorisation` ; journal, plan et décisions gardent les entrées des deux sessions ;
+  - outil `tools/colorization-server/recognize_ccip.py` : mêmes 13 pages, mêmes 101 cadres (ceux de Magi v2), même
+    relevé, même banque (les 40 images de la fiche, en gris) ; grand modèle CCIP (384 Mo, empreinte SHA-256
+    contrôlée), moins d'une seconde par image sur le processeur ; résultats dans `reconnaissance\ccip\` du jeu d'essai, hors du dépôt.
+- Résultat : **toujours 0 nom juste sur 29**. Le nom le plus proche n'est jamais le bon (0 fois sur 23, contre 5 avec
+  Magi v2) : presque tous les personnages du chapitre ressemblent le plus à Zoro ou à Nami. Aucun seuil ne sauve
+  l'essai : du plus strict au plus large, 0 bon nom, et jusqu'à 70 personnages extérieurs nommés à tort.
+  - CCIP lui-même fonctionne : parmi les images de la fiche, il retrouve le bon personnage 35 fois sur 35 en couleur
+    et 31 sur 35 en gris. Ce qui bloque, pour les deux modèles, c'est l'écart entre les images de la fiche
+    (couvertures en couleur, aspect habituel) et ce chapitre (noir et blanc et trames, Luffy transformé d'un bout à
+    l'autre, Usopp casqué).
+  - Avec des exemples en gris pris dans les autres pages du chapitre (cas favorable) : 66 % mais 69 personnages
+    extérieurs nommés à tort ; avec les autres personnages aussi en exemples : 31 % et 12 erreurs. Magi v2 faisait
+    mieux dans ce cas (69 % et 63 erreurs ; 59 % et 5 erreurs) : CCIP distingue mal les dessins en noir et blanc
+    entre eux.
+- Décisions : D25 et D26 (utilisateur).
+- Vérifications :
+  - les 45 tests de la fiche repassent après la fusion ;
+  - contrôle « rien de privé » sur tout l'écart avec `origin/main` : seuls des coefficients de calcul (passage en
+    OKLab, normalisation des images) ressemblent à des coordonnées GPS, sans objet ;
+  - contrôle de CCIP sur les images de la fiche (ci-dessus) : le calcul est juste, l'échec ne vient pas d'une erreur
+    de branchement ;
+  - mêmes cadres et même relevé que pour Magi v2 : les deux essais se comparent directement.
+- Non vérifié sur téléphone : sans objet, l'application n'a pas changé.
+- Problèmes et dette :
+  - un seul chapitre, et difficile : on ne sait pas encore si l'échec vient de ce chapitre (transformations) ou de
+    la méthode (des images en couleur pour reconnaître des dessins en noir et blanc) ;
+  - le serveur du PC tourne encore en mode capture, sans utilité depuis D22.
+- Prochaine étape : l'utilisateur choisit la suite de la tâche 3 et dit si la fiche couleurs lui paraît juste (Q7).
+
 ## 2026-11-23 · Colorisation fidèle : essais sur le chapitre 1192, la reconnaissance des personnages échoue
 
 - Branche et commit : `colorisation` (voir le commit « Add the character recognition trial (task 3) ») ; la fiche

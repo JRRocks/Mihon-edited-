@@ -5,8 +5,8 @@ des scènes, tenues selon l'arc). La logique est décrite dans
 [`specs/colorisation-fidele.md`](specs/colorisation-fidele.md), les décisions dans [`DECISIONS.md`](DECISIONS.md).
 
 État au 2026-11-23 : feu vert donné (D16). Série d'essai : One Piece (D17), chapitre 1192 fourni en fichier (D22).
-Tâches 1 et 2 faites (la fiche de la session cloud est fusionnée dans `colorisation`, D26) ; tâche 3 : Magi v2
-arrêté sous le seuil, nouvel essai avec CCIP (D25).
+Tâches 1 et 2 faites (la fiche de la session cloud est fusionnée dans `colorisation`, D26) ; tâche 3 arrêtée :
+Magi v2 puis CCIP (D25) restent à 0 nom juste sur 29, la suite attend le choix de l'utilisateur.
 
 ## Partie 1 : la preuve sur le PC, avec l'application actuelle
 
@@ -16,7 +16,7 @@ Chaque tâche se termine par une image ou une page que l'utilisateur ouvre et ju
 |---|---|---|---|
 | 1 | Jeu d'essai : le serveur du PC garde les pages qu'il reçoit ; l'utilisateur lance depuis le téléphone le coloriage d'un chapitre de One Piece (D13, D17) | Le dossier d'essai contient les pages du chapitre, dans l'ordre, et le titre de la série | terminée le 2026-11-23 par le fichier CBZ du chapitre 1192 (D22, D23) : 14 pages dans l'ordre, titre et numéro lus dans le fichier ; la capture depuis le téléphone reste prête mais n'a pas servi |
 | 2 | Fiche de la série d'essai, construite par la recherche automatique | Une page « fiche couleurs » : les personnages principaux, leurs couleurs, d'où vient chaque couleur, et les points où le PC doute (D14) ; il dit si c'est juste | faite par la session cloud (outil `color_sheet.py`, D30 à D35), fusionnée dans `colorisation` le 2026-11-23 (D26) ; ses 45 tests repassés sur le PC ; à juger : [fiche One Piece](../tools/colorization-server/essais/one-piece/fiche.md) |
-| 3 | Reconnaissance des personnages sur le chapitre d'essai (téléchargement autorisé par D12) | Les pages du chapitre avec un nom sur chaque personnage ; le taux de bons noms est écrit. Sous 85 % sur les personnages principaux, on s'arrête et on choisit une autre voie | Magi v2 arrêté le 2026-11-23 : 0 nom juste sur 29 apparitions (banque tirée de la fiche) ; essai avec CCIP en cours (D25) |
+| 3 | Reconnaissance des personnages sur le chapitre d'essai (téléchargement autorisé par D12) | Les pages du chapitre avec un nom sur chaque personnage ; le taux de bons noms est écrit. Sous 85 % sur les personnages principaux, on s'arrête et on choisit une autre voie | arrêtée le 2026-11-23 : 0 nom juste sur 29 apparitions avec Magi v2, puis avec CCIP (D25), banque tirée de la fiche ; en attente du choix d'une autre voie par l'utilisateur |
 | 4 | Comparaison des moteurs sur dix pages, références données case par case : moteur installé contre moteur spécialisé (D12) | Une planche avant et après par moteur, avec le temps par page ; il choisit le moteur | à faire |
 | 5 | Verrou des couleurs et contrôle | Sur tout le chapitre, cheveux, peau et tenue de chaque personnage reconnu gardent la même couleur ; la liste des pages douteuses est affichée | à faire |
 | 6 | Lieux, objets et inconnus | Un décor, un objet ou un figurant revu plus loin garde la couleur de sa première apparition, dans le chapitre puis dans un second chapitre de la même série | à faire |
