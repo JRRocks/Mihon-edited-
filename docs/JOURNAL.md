@@ -2,6 +2,43 @@
 
 Les entrées les plus récentes en haut. On ne réécrit pas une entrée : une erreur se corrige par une entrée nouvelle.
 
+## 2026-11-23 · Colorisation fidèle : les échelons du PC trouvent des personnages, ils ne les nomment pas
+
+- Branche et commit : `colorisation` (commit « Add the PC rungs trial: Manga109 detector and Danbooru tagger »).
+- Objectif : tâche 3b, avec les téléchargements accordés (D38) : ce que le PC tranche seul, et combien des
+  6 personnages sans cadre un détecteur fait pour le noir et blanc retrouve.
+- Réalisé :
+  - détecteur Manga109 (101 Mo) et étiqueteur Danbooru WD EVA02-Large v3 (1,26 Go) téléchargés à des versions
+    figées, contrôlés par leur empreinte ; outil `recognize_pc.py` ; le détecteur de `colorsheet/vision.py` sait
+    maintenant rendre la classe de chaque cadre et garder les proportions de la page ;
+  - les cadres nouveaux du détecteur ont été relevés à l'œil avant que l'étiqueteur ne propose un nom
+    (`releve-nouveaux.json`, dans le jeu d'essai) ;
+  - image de résultat `reconnaissance\pc\echelons-du-pc.jpg` (hors du dépôt), envoyée à l'utilisateur.
+- Résultat :
+  - détecteur : 0,2 s par page ; 4 cadres nouveaux, dont 2 des 6 personnages sans cadre (Luffy pages 7 et 8 ; à la
+    page 7, le cadre prend surtout ses poings) et 2 personnages extérieurs. Franky (page 1) et Usopp (page 10) ne
+    sont trouvés à aucune taille essayée (page étirée, 640, 960, 1 280, 1 600). Il ne voit que 13 des
+    23 personnages que Magi encadre : il complète Magi, il ne le remplace pas. Plafond porté de 23 à 25 sur 29 ;
+  - étiqueteur : 2,1 s par cadre ; au seuil de sa démo (0,85), 5 noms justes sur 29 (dont un des cadres nouveaux),
+    aucun faux ; 7 au seuil 0,7 ; dès 0,5, il nomme Usopp le géant de la page 10, le piège où Fable est tombé ;
+    il lit Mario dans Usopp casqué ;
+  - échelle simulée avec l'étiqueteur devant Claude : même résultat (22 sur 29) et même coût (1,74 $) ; il ne
+    nomme que des Luffy que les échelons Claude nomment déjà.
+- Décisions : D38 (utilisateur) ; D39 et D40 (développeur).
+- Correction de l'entrée précédente : sur les 7 apparitions que l'échelle D37 ne nomme pas juste, 6 n'ont pas de
+  cadre et la septième (Luffy, page 12, cadre 6) a été rangée en « ? » par deux échelons d'accord, sans aller à la
+  session. D40 l'y renvoie : 7 cadres pour la session au lieu de 6.
+- Vérifications :
+  - les 45 tests de la fiche repassent après la modification du détecteur ;
+  - les quatre cadres nouveaux revus à l'œil sur la page entière et sur un agrandissement.
+- Non vérifié :
+  - les échelons Claude sur les 2 cadres nouveaux : 25 sur 29 est un plafond, pas un résultat ;
+  - un autre chapitre : tous les réglages ont été vus sur celui-ci.
+- Problèmes et dette : la synchronisation du Drive du 2026-11-23 a rendu le code 3, donc retiré des fichiers en
+  trop côté Drive ; je n'ai pas pu dire lesquels (rien du projet dans la corbeille du Drive, probablement un dossier
+  vide). Q7 (jugement de la fiche) toujours en attente.
+- Prochaine étape : tâche 3c, dès que l'utilisateur a ouvert son compte API Anthropic et rangé sa clé sur le PC.
+
 ## 2026-11-23 · Colorisation fidèle : l'échelle d'IA, premiers essais avec Claude
 
 - Branche et commit : `colorisation` (commit « Record the AI ladder decisions and the Claude rung trial »).

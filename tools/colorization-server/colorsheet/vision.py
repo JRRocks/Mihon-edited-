@@ -11,6 +11,7 @@ Pre- and post-processing follow the reference implementation, dghs-imgutils 0.19
 """
 import ast
 import json
+import math
 
 import cv2
 import numpy as np
@@ -87,19 +88,34 @@ def nms(boxes, scores, iou_threshold):
 
 
 class Yolo:
-    """YOLOv8 detector exported by ultralytics: stretched to the model size, boxes decoded then NMS."""
+    """YOLOv8 detector exported by ultralytics: stretched to the model size, boxes decoded then NMS.
 
-    def __init__(self, path, threshold, iou):
+    With `longest`, for a model exported with dynamic sizes, the image keeps its proportions instead: shrunk so that
+    its longest side is at most `longest`, then each side rounded up to a multiple of 32 (as the reference
+    implementation does with allow_dynamic)."""
+
+    def __init__(self, path, threshold, iou, longest=None):
         self.session = _session(path)
         meta = self.session.get_modelmeta().custom_metadata_map
         size = json.loads(meta["imgsz"]) if "imgsz" in meta else [640, 640]
         self.width, self.height = size  # read as (width, height), like the reference implementation
-        self.threshold, self.iou = threshold, iou
+        self.threshold, self.iou, self.longest = threshold, iou, longest
+
+    def input_size(self, w, h):
+        if not self.longest:
+            return self.width, self.height
+        r = min(1.0, self.longest / max(w, h))
+        return int(math.ceil(w * r / 32) * 32), int(math.ceil(h * r / 32) * 32)
 
     def detect(self, rgb):
         """Returns [(x0, y0, x1, y1, score)] in the image's pixels."""
+        return [found[:5] for found in self.detect_classes(rgb)]
+
+    def detect_classes(self, rgb):
+        """Like detect, with the class number of each box last: (x0, y0, x1, y1, score, class)."""
         h, w = rgb.shape[:2]
-        x = pil_resize(rgb, (self.width, self.height)).astype(np.float32).transpose(2, 0, 1)[None] / 255
+        width, height = self.input_size(w, h)
+        x = pil_resize(rgb, (width, height)).astype(np.float32).transpose(2, 0, 1)[None] / 255
         out = self.session.run(["output0"], {"images": x})[0][0]  # (4 + classes, candidates)
         scores = out[4:].max(axis=0)
         out = out[:, scores > self.threshold].T
@@ -107,14 +123,15 @@ class Yolo:
             return []
         cx, cy, bw, bh = out[:, :4].T
         boxes = np.stack([cx - bw / 2, cy - bh / 2, cx + bw / 2, cy + bh / 2], axis=1)
-        scores = out[:, 4:].max(axis=1)
+        scores, classes = out[:, 4:].max(axis=1), out[:, 4:].argmax(axis=1)
         keep = nms(boxes, scores, self.iou)
-        sx, sy = w / self.width, h / self.height
+        sx, sy = w / width, h / height
         result = []
         for i in keep:
             b = boxes[i]
             result.append((int(np.clip(b[0] * sx, 0, w)), int(np.clip(b[1] * sy, 0, h)),
-                           int(np.clip(b[2] * sx, 0, w)), int(np.clip(b[3] * sy, 0, h)), float(scores[i])))
+                           int(np.clip(b[2] * sx, 0, w)), int(np.clip(b[3] * sy, 0, h)), float(scores[i]),
+                           int(classes[i])))
         return result
 
 

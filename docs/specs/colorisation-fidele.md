@@ -154,6 +154,10 @@ Le chapitre est analysé en entier avant le premier coloriage, et le résultat e
   fiche. Chaque échelon répond « sûr » ou « incertain » ; seul « sûr » arrête la montée. Ce qu'aucun échelon ne
   tranche attend Claude en session, avec l'utilisateur, et le chapitre n'est colorié qu'ensuite (D29). Une IA ne
   donne qu'un nom : les couleurs restent celles de la fiche (D2, D36).
+  Après les essais du chapitre 1192 : un nom est retenu quand deux échelons successifs le donnent (D37), un « ? »
+  n'en est pas un (D40). Le PC trouve les personnages : cadres de Magi v2, plus ceux du détecteur Manga109 qui ne
+  recouvrent aucun cadre de Magi ; les noms viennent des échelons Claude, car CCIP et l'étiqueteur Danbooru ne
+  nomment presque rien en noir et blanc (D25, D39).
 - **Exemples noir et blanc** : un recadrage n'entre dans la fiche que s'il est appuyé par un autre recadrage déjà
   classé dans le même groupe de pages, ou validé par l'utilisateur. L'ajout automatique au meilleur score se trompe
   dans 62 à 89 % des cas (Re:Cognize, 2026).
@@ -233,7 +237,8 @@ Relevées sur leur page le 2026-11-22. Aucune n'est intégrée.
 | Brique | Rôle | Licence | Poids | État |
 |---|---|---|---|---|
 | [Magi v2](https://huggingface.co/ragavsachdeva/magiv2) | Cases, textes, personnages nommés à partir d'une banque d'exemples, sur un chapitre entier | Usage personnel, recherche, non commercial (fiche du modèle) ; pas de fichier de licence dans le dépôt | 2 Go | Essayé le 2026-11-23 (tâche 3, D24) sur le chapitre 1192 de One Piece : 0 nom juste sur 29, avec les images de la fiche passées en gris ; ses cadres de personnages servent à l'essai de CCIP |
-| [deepghs/manga109_yolo](https://huggingface.co/deepghs/manga109_yolo) | Visages, corps, cases, textes | Non indiquée | Petit | À essayer |
+| [deepghs/manga109_yolo](https://huggingface.co/deepghs/manga109_yolo) | Visages, corps, cases, textes | Non indiquée sur la page ; AGPL-3.0 dans les métadonnées du modèle (Ultralytics) ; entraîné sur Manga109-s, données non commerciales | 101 Mo | Essayé le 2026-11-23 (tâche 3b, D38) sur le chapitre 1192, page gardée dans ses proportions, côté le plus long 640 : 0,2 s par page ; retrouve 2 des 6 apparitions que Magi v2 ne voit pas (Luffy deux fois ; ni Franky ni Usopp, à aucune taille essayée), mais seulement 13 des 23 apparitions que Magi v2 encadre : il complète Magi, il ne le remplace pas |
+| [WD EVA02-Large tagger v3](https://huggingface.co/SmilingWolf/wd-eva02-large-tagger-v3) | Étiquettes Danbooru d'une image, dont les noms de personnages (7 des 10 de la fiche de One Piece ; ni Franky, ni Brook, ni Jinbe) | Apache-2.0 | 1,26 Go | Essayé le 2026-11-23 (tâche 3b, D38) sur les cadres du chapitre 1192 : 2,1 s par cadre sur le processeur ; au seuil de sa démo (0,85), 5 noms justes sur 29 et aucun faux ; dès 0,5, il prend un géant pour Usopp ; Usopp casqué lui évoque Mario. Pas gardé comme échelon (D39) |
 | [See-through, découpage du corps](https://huggingface.co/24yearsold/l2d_sam_iter2) | 19 parties : cheveux, visage, yeux, haut, bas… | Apache-2.0 | 1,3 Go | Employé par la recherche de la fiche (tâche 2, D32) sur des images en couleur : environ 12 s par image sur le processeur ; jamais mesuré sur du noir et blanc |
 | [deepghs : détection des personnages et des têtes](https://huggingface.co/deepghs/anime_head_detection) | Cadres des personnages et des têtes sur une image en couleur | MIT | 2 × 45 Mo | Employé par la recherche de la fiche (D31) |
 | [deepghs : CCIP, grand modèle](https://huggingface.co/deepghs/ccip_onnx) | Dit si deux images montrent le même personnage | OpenRAIL | 384 Mo | Employé par la recherche de la fiche (D31) ; le petit modèle confond des personnages de One Piece. Essayé pour la tâche 3 (D25) sur les cadres de Magi v2 : 0 nom juste sur 29 dans les pages en noir et blanc, alors qu'il retrouve le bon personnage parmi les images de la fiche 35 fois sur 35 en couleur et 31 sur 35 en gris |

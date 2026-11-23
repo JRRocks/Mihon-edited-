@@ -44,6 +44,9 @@ Une décision ne se réécrit pas : elle se révise par une ligne nouvelle, dat�
 | D35 | 2026-11-23 | Développeur | Cheveux : chaque image garde ses deux ou trois tons principaux, car la zone des cheveux contient souvent un chapeau (Luffy, Chopper) ou le fond. Sur l'ensemble des images, le groupe le plus nombreux l'emporte. S'il contredit les mots de contrôle alors que le deuxième groupe les confirme, on retient le deuxième, et le personnage passe en « à revoir » avec l'explication. | Sur l'essai, le chapeau de paille de Luffy l'emportait sur ses cheveux noirs. Les mots ne créent aucune couleur : ils départagent deux mesures, et l'utilisateur voit pourquoi |
 | D36 | 2026-11-23 | Utilisateur | L'échelle d'IA (D27) sert à reconnaître les personnages : « Les personnages ». Les couleurs restent mesurées sur les images officielles, jamais demandées à une IA (D2). | Réponse à Q11 ; c'est la reconnaissance qui bloque |
 | D37 | 2026-11-23 | Développeur | Règle de montée de l'échelle : un nom est retenu quand deux échelons successifs le donnent ; sinon le cadre monte d'un échelon. Ce que Fable ne départage pas attend la session (D29). Règle choisie sur le chapitre 1192, à confirmer sur un autre. | Sur ce chapitre, Haiku puis Fable se sont dits sûrs d'un nom faux ; « le premier sûr gagne » donne 19 noms justes sur 29 et 19 cadres pour la session, l'accord de deux échelons 22 sur 29, aucun personnage extérieur nommé et 6 cadres pour la session |
+| D38 | 2026-11-23 | Utilisateur | Téléchargements pour les échelons du PC : « Sans Qwen3-VL, 1,4 Go ». Le détecteur entraîné sur Manga109 (0,1 Go) et l'étiqueteur Danbooru (1,3 Go) ; pas Qwen3-VL 8B (5,8 Go) pour l'instant. | Réponse à Q12 |
+| D39 | 2026-11-23 | Développeur | Échelons du PC (D28) après leur essai : le PC trouve les personnages (cadres de Magi v2, complétés par ceux du détecteur Manga109 qui ne recouvrent aucun cadre de Magi) ; les noms viennent de Claude. L'étiqueteur Danbooru n'est pas gardé comme échelon ; il reste dans le cache des modèles. | Sur le chapitre 1192, le détecteur retrouve 2 des 6 personnages sans cadre, en 0,2 s par page. L'étiqueteur nomme juste 5 à 7 personnages sur 29, tous déjà nommés par les échelons Claude : l'échelle donne le même résultat et le même coût avec ou sans lui, pour 2 s de calcul par cadre ; il ne connaît ni Franky, ni Brook, ni Jinbe |
+| D40 | 2026-11-23 | Développeur | Un « ? » n'est pas un nom : deux échelons d'accord sur « ? » ou « inconnu » renvoient le cadre à la session (D29), comme un désaccord. | Sur l'essai de D37, deux échelons ont rangé un Luffy (page 12, cadre 6) en « ? » : sans cette règle, il n'aurait été ni nommé ni montré à la session |
 
 ## En attente
 
@@ -58,7 +61,7 @@ Questions posées le 2026-11-23, après l'arrêt de la tâche 3 (0 nom juste sur
 | Q9 | De quoi sont faits les échelons au-dessus de Magi et CCIP : le PC puis Claude, Claude directement, ou le PC seulement | Le PC, puis Claude (D28) |
 | Q10 | Comment Claude sert de dernier recours : en session après le coloriage, en session avant, ou appelé seul par le serveur | En session, avant le coloriage (D29) |
 | Q11 | À quoi sert l'échelle : reconnaître les personnages, ou aussi le coloriage | Les personnages (D36) |
-| Q12 | Téléchargements pour les échelons du PC : détecteur Manga109 (0,1 Go), étiqueteur Danbooru (1,3 Go), Qwen3-VL 8B (5,8 Go) | en attente |
+| Q12 | Téléchargements pour les échelons du PC : détecteur Manga109 (0,1 Go), étiqueteur Danbooru (1,3 Go), Qwen3-VL 8B (5,8 Go) | Sans Qwen3-VL, 1,4 Go (D38) |
 
 Questions du 2026-11-22, toutes répondues le jour même ; le feu vert est donné (D16) :
 

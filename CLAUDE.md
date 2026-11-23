@@ -52,9 +52,10 @@ in `gradle/libs.versions.toml` + `gradle/mihon.versions.toml`.
   deepghs head detection + CCIP, parts by See-through, colors measured in OKLab, Danbooru/Fandom control words, D14
   doubt rules; package `colorsheet/`, pure-part tests with `uv run --script tests/run_tests.py`. Trial pages live in
   `essais/` (JSON, SVG swatches and image URLs only, never images).
-- `tools/colorization-server/recognize.py`, `recognize_ccip.py` — character recognition trials on a chapter (task 3):
-  Magi v2 on the CPU, then CCIP on Magi's boxes; pages, truth file and results stay in the trial folder, outside
-  the repo.
+- `tools/colorization-server/recognize.py`, `recognize_ccip.py`, `recognize_pc.py` — character recognition trials on
+  a chapter (task 3): Magi v2 on the CPU, then CCIP on Magi's boxes, then the PC rungs of the ladder (Manga109
+  detector for the characters Magi misses, WD Danbooru tagger for names); pages, truth files and results stay in the
+  trial folder, outside the repo.
 
 ## Project memory
 
