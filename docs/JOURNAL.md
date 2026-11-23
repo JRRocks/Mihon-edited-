@@ -40,7 +40,10 @@ Les entrées les plus récentes en haut. On ne réécrit pas une entrée : une e
   - le relevé est fait à l'œil par Claude, sans connaître ce chapitre (paru après ses connaissances) : quelques
     étiquettes « Luffy » ou « autre » peuvent être fausses, sans changer le résultat (Magi n'a nommé que deux cadres) ;
   - ce chapitre est un cas difficile ; un chapitre où l'équipage a son aspect habituel donnerait sans doute plus ;
-  - le serveur du PC tourne encore en mode capture : il ne sert plus aux essais (D22).
+  - le serveur du PC tourne encore en mode capture : il ne sert plus aux essais (D22) ;
+  - miroir Drive refait le 2026-11-23 (Google Drive relancé) : la copie miroir a retiré côté Drive 215 Ko de
+    fichiers qui n'existaient plus sur le PC (sens unique PC vers Drive, voir `CLAUDE.local.md`) ; la corbeille du
+    Drive les garde 30 jours.
 - Prochaine étape : l'utilisateur choisit la suite de la tâche 3 (autre modèle, noms donnés par lui, couleurs
   stables sans nom, ou autre chapitre), dit si la fiche couleurs lui paraît juste, et si la branche de la session
   cloud doit être fusionnée.
